@@ -1,23 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  /* 기본 표면/텍스트는 브랜드 팔레트 기준 (light-first) */
+  /* 라이트 인더스트리얼: 밝은 베이스 + 진한 텍스트 (가시성 우선) */
   --background: #ffffff;
-  --foreground: #0f1a28;
+  --foreground: #12161c;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* 브랜드 팔레트 — 유일한 색상 소스. 이 외 색 사용 금지 (see .claude/rules/design-system.md) */
-  --color-navy: #001b3d;
-  --color-navy-700: #0b2e52;
-  --color-orange: #f26c21;
-  --color-steel: #5b7185;
-  --color-mist: #eef2f6;
-  --color-sand: #fceee3;
-  --color-ink: #0f1a28;
+  /* 브랜드 팔레트 (라이트 인더스트리얼) — 유일한 색상 소스.
+     이 외 색 사용 금지 (see .claude/rules/design-system.md) */
+  --color-navy: #001b3d; /* 브랜드 primary, 다크 섹션 */
+  --color-navy-700: #0a2e52; /* navy 위 계층 */
+  --color-graphite: #14181f; /* 산업용 다크 표면(헤더/교차 섹션) */
+  --color-orange: #f26c21; /* 브랜드 accent, CTA */
+  --color-amber: #f5a623; /* sub accent, 수치·하이라이트 */
+  --color-steel: #64748b; /* muted 텍스트, 라인 */
+  --color-concrete: #e9edf1; /* 밝은 섹션 베이스 */
+  --color-ink: #12161c; /* 본문 텍스트 */
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

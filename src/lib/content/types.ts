@@ -6,7 +6,7 @@
  */
 
 /** 팔레트에서 강조에 쓸 수 있는 토큰 (see .claude/rules/design-system.md) */
-export type BrandAccent = "orange" | "navy" | "navy-700";
+export type BrandAccent = "orange" | "navy" | "graphite" | "amber";
 
 /** 게시글 성격의 콘텐츠 1건이 공통으로 가지는 필드 */
 export interface ContentRecord {

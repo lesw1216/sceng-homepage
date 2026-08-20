@@ -14,10 +14,10 @@ export function SiteFooter({ company }: SiteFooterProps) {
         <div className="grid gap-10 py-14 md:grid-cols-[1.4fr_1fr]">
           <div>
             <div className="flex items-center gap-2.5 text-white">
-              <span className="grid h-9 w-9 place-items-center rounded-md bg-orange text-sm font-bold">
+              <span className="grid h-9 w-9 place-items-center rounded-sm bg-orange text-sm font-extrabold">
                 {company.shortName}
               </span>
-              <span className="text-base font-semibold">{company.name}</span>
+              <span className="text-base font-bold">{company.name}</span>
             </div>
             <p className="mt-4 max-w-md text-sm leading-6">{company.tagline}</p>
             <address className="mt-4 space-y-1 text-sm not-italic leading-6">

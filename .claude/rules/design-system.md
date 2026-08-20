@@ -1,27 +1,36 @@
 # 디자인 시스템 규칙
 
-## 색상 팔레트 (Single Source of Truth)
+## 색상 팔레트 (Single Source of Truth) — 라이트 인더스트리얼
 
-브랜드 2색 + 보조 5색 = **총 7색만 사용한다. 이 외 임의 색상 도입 금지.**
+브랜드 2색(navy·orange) + 보조 6색 = **총 8색만 사용한다. 이 외 임의 색상 도입 금지.**
 색은 `src/app/globals.css`의 `@theme`에 `--color-*` 토큰으로 정의되어 Tailwind 유틸리티로 노출된다.
 
 | 토큰 | HEX | Tailwind 예 | 용도 |
 |------|-----|-------------|------|
-| `navy` | `#001B3D` | `bg-navy` `text-navy` | 브랜드 primary. 헤더/푸터, 주요 텍스트 |
-| `orange` | `#F26C21` | `bg-orange` `text-orange` | 브랜드 accent. CTA, 강조, 링크 hover |
-| `navy-700` | `#0B2E52` | `bg-navy-700` | navy 위 계층 surface, hover |
-| `steel` | `#5B7185` | `text-steel` `border-steel` | muted 텍스트, border, 보조 라벨 |
-| `mist` | `#EEF2F6` | `bg-mist` | 밝은 섹션 배경 |
-| `sand` | `#FCEEE3` | `bg-sand` | orange 계열 따뜻한 tint 배경 |
-| `ink` | `#0F1A28` | `text-ink` | 본문 기본 텍스트 |
+| `navy` | `#001B3D` | `bg-navy` `text-navy` | 브랜드 primary. 다크 섹션(Contact), 제목 |
+| `navy-700` | `#0A2E52` | `bg-navy-700` | navy 위 계층 surface, hover |
+| `graphite` | `#14181F` | `bg-graphite` | 산업용 다크 표면. 헤더/Hero/교차 섹션 |
+| `orange` | `#F26C21` | `bg-orange` `text-orange` | 브랜드 accent. CTA, 강조, 넘버·바 |
+| `amber` | `#F5A623` | `text-amber` | sub accent. 수치·하이라이트·다크 위 링크 hover |
+| `steel` | `#64748B` | `text-steel` | muted 텍스트, 영문 라벨, 라인 |
+| `concrete` | `#E9EDF1` | `bg-concrete` | 밝은 섹션 베이스(라이트 톤 교차) |
+| `ink` | `#12161C` | `text-ink` | 본문 기본 텍스트 |
 
 ### 파생 규칙
-- 명암·상태(hover/disabled/overlay)는 **새 색을 만들지 말고** Tailwind opacity로 파생: `bg-navy/90`, `text-ink/60`, `border-steel/30`.
+- 명암·상태(hover/disabled/overlay/border)는 **새 색을 만들지 말고** Tailwind opacity로 파생: `bg-navy/90`, `text-ink/70`, `border-ink/10`, `divide-white/10`.
 - 그라디언트가 필요하면 위 토큰 조합만 사용.
 
+## 인더스트리얼 스타일 원칙 (가시성 우선)
+- **대비를 강하게**: 본문 텍스트는 `text-ink/80` 이상, 제목은 `text-navy`/`text-white`. 연한 회색(`/50` 이하)은 라벨·메타에만.
+- **다크/라이트 섹션 교차**: graphite(Hero) → white(About) → concrete(Tech) → white(Business) → concrete(Achievements) → navy(Contact). `Section`의 `tone` prop 사용.
+- **각진 형태**: 카드·버튼은 `rounded-sm` 또는 각지게. 과한 라운드 지양.
+- **굵은 구획**: 카드 `border-2 border-ink/10`, 강조는 좌측/상단 `border-l-4`·컬러바(`accentBg`).
+- **모노 라벨 + 넘버링**: 섹션·카드에 `font-mono` 영문 라벨과 `01`·`02` 넘버로 산업 도면 느낌.
+- 색 강조 매핑은 `src/lib/accent.ts`(`accentBg`/`accentText`/`accentBorder`)의 정적 맵만 사용(Tailwind 동적 클래스 스캔 한계).
+
 ## 접근성 (필수 체크)
-- 오렌지(`#F26C21`) 위 텍스트는 **흰색**을 쓰고 대비를 확인한다(작은 본문 텍스트는 대비 부족 가능 → 큰 텍스트/버튼 라벨에 한정, 필요 시 `navy` 텍스트).
-- navy/ink 배경 위에는 흰색 또는 `mist` 텍스트.
+- 오렌지(`#F26C21`) 위 텍스트는 **흰색**을 쓰고 대비를 확인한다(작은 본문 텍스트는 대비 부족 가능 → 큰 텍스트/버튼 라벨에 한정).
+- navy/graphite 배경 위에는 흰색 또는 `white/70` 이상 텍스트, 라벨 강조는 `amber`.
 - 본문 최소 크기 16px, 대비 WCAG AA(4.5:1) 이상.
 - 색만으로 정보를 전달하지 않는다(아이콘/텍스트 병행).
 

@@ -6,25 +6,31 @@ export function BusinessAreas({ areas }: { areas: BusinessArea[] }) {
   return (
     <Section
       id="business"
+      index="03"
       eyebrow="Core Business"
       title="사업영역"
       description="산업 자동화부터 빌딩 자동화, 데이터센터 인프라까지 통합 제어 솔루션을 제공합니다."
     >
-      <div className="grid gap-6 lg:grid-cols-3">
-        {areas.map((area) => (
+      <div className="grid gap-5 lg:grid-cols-3">
+        {areas.map((area, i) => (
           <article
             key={area.key}
-            className="overflow-hidden rounded-2xl border border-steel/15 bg-white"
+            className="flex flex-col border-2 border-ink/10 bg-white"
           >
             <div className={`px-7 py-6 text-white ${accentBg[area.accent]}`}>
-              <h3 className="text-xl font-bold">{area.title}</h3>
-              <p className="mt-1 text-sm text-white/85">{area.titleEn}</p>
+              <span className="font-mono text-sm font-bold text-white/70">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="mt-1 text-2xl font-extrabold">{area.title}</h3>
+              <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-white/80">
+                {area.titleEn}
+              </p>
             </div>
-            <ul className="space-y-2.5 px-7 py-6">
+            <ul className="flex-1 divide-y divide-ink/[0.07] px-7">
               {area.items.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2.5 text-sm leading-6 text-ink/80"
+                  className="flex items-start gap-2.5 py-3 text-sm font-medium leading-6 text-ink/85"
                 >
                   <svg
                     className={`mt-1 h-4 w-4 shrink-0 ${accentText[area.accent]}`}

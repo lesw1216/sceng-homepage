@@ -14,14 +14,14 @@ export function SiteHeader({ companyName, shortName }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-navy/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-graphite/95 backdrop-blur">
       <Container>
         <div className="flex h-16 items-center justify-between">
           <a href="#top" className="flex items-center gap-2.5 text-white">
-            <span className="grid h-9 w-9 place-items-center rounded-md bg-orange text-sm font-bold tracking-tight">
+            <span className="grid h-9 w-9 place-items-center rounded-sm bg-orange text-sm font-extrabold tracking-tight">
               {shortName}
             </span>
-            <span className="text-base font-semibold tracking-tight">
+            <span className="text-base font-bold tracking-tight">
               {companyName}
             </span>
           </a>
@@ -78,7 +78,7 @@ export function SiteHeader({ companyName, shortName }: SiteHeaderProps) {
       {open && (
         <nav
           id="mobile-menu"
-          className="border-t border-white/10 bg-navy md:hidden"
+          className="border-t border-white/10 bg-graphite md:hidden"
           aria-label="모바일 메뉴"
         >
           <Container>

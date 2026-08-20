@@ -74,7 +74,7 @@ export const techPhases: TechPhase[] = [
   {
     title: "설치 및 시운전",
     titleEn: "Installation & Commissioning",
-    accent: "navy-700",
+    accent: "graphite",
     groups: [
       {
         label: "설치",

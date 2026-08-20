@@ -7,11 +7,21 @@ import type { BrandAccent } from "./content/types";
 export const accentBg: Record<BrandAccent, string> = {
   orange: "bg-orange",
   navy: "bg-navy",
-  "navy-700": "bg-navy-700",
+  graphite: "bg-graphite",
+  amber: "bg-amber",
 };
 
 export const accentText: Record<BrandAccent, string> = {
   orange: "text-orange",
   navy: "text-navy",
-  "navy-700": "text-navy-700",
+  graphite: "text-graphite",
+  amber: "text-amber",
+};
+
+/** 카드 좌측/상단 강조 보더용 */
+export const accentBorder: Record<BrandAccent, string> = {
+  orange: "border-orange",
+  navy: "border-navy",
+  graphite: "border-graphite",
+  amber: "border-amber",
 };

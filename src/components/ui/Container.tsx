@@ -5,10 +5,12 @@ interface ContainerProps {
   className?: string;
 }
 
-/** 페이지 공통 가로 컨테이너 (see .claude/rules/design-system.md) */
+/** 페이지 공통 가로 컨테이너. 넓은 max-width + 좁은 좌우 여백 (see .claude/rules/design-system.md) */
 export function Container({ children, className = "" }: ContainerProps) {
   return (
-    <div className={`mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 ${className}`}>
+    <div
+      className={`mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8 ${className}`}
+    >
       {children}
     </div>
   );

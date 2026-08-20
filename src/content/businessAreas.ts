@@ -39,7 +39,7 @@ export const businessAreas: BusinessArea[] = [
     key: "datacenter-infra",
     title: "데이터센터 인프라 솔루션",
     titleEn: "EPMS / DCIM",
-    accent: "navy-700",
+    accent: "graphite",
     items: [
       "전력설비품질 감시·제어·관리 (EPMS)",
       "IT자산·상면·전력·냉각설비 통합관리 (DCIM)",
