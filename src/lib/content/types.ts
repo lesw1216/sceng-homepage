@@ -101,11 +101,22 @@ export interface Metric {
   value: string;
 }
 
-/** 실적 현황 1건 = 게시글 1건 */
+/** 실적 현황 1건 = 게시글 1건 (프로젝트) */
 export interface Achievement extends ContentRecord {
-  metrics: Metric[];
-  /** 분류(예: "산업 자동화", "빌딩 자동화") */
-  category?: string;
-  /** 발주처·고객사 (공개 가능 시) */
-  client?: string;
+  /** 연도 (필터·정렬 키) */
+  year: number;
+  /** 분류(예: "산업 자동화", "빌딩 자동화", "데이터센터") */
+  category: string;
+  /** 대표 사진 (public/images 경로) */
+  image: string;
+  /** 고객사 */
+  client: string;
+  /** 발주 */
+  orderer: string;
+  /** 위치 */
+  location: string;
+  /** 프로젝트 기간 */
+  period: string;
+  /** 정량 지표 (선택) */
+  metrics?: Metric[];
 }

@@ -1,59 +1,75 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
 import { NAV_ITEMS } from "./navigation";
 
-interface SiteHeaderProps {
-  companyName: string;
-  shortName: string;
-}
-
-/** 상단 고정 네비게이션. 모바일 메뉴 토글 때문에 client 컴포넌트. */
-export function SiteHeader({ companyName, shortName }: SiteHeaderProps) {
+export function SiteHeader() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-graphite/95 backdrop-blur">
+    <header className="sticky top-0 z-50 bg-white">
       <Container>
-        <div className="flex h-16 items-center justify-between">
-          <a href="#top" className="flex items-center gap-2.5 text-white">
-            <span className="grid h-9 w-9 place-items-center rounded-sm bg-orange text-sm font-extrabold tracking-tight">
-              {shortName}
-            </span>
-            <span className="text-base font-bold tracking-tight">
-              {companyName}
-            </span>
-          </a>
+        <div className="flex h-20 items-center justify-between">
+          <Link
+            href="/"
+            className="relative block h-12 w-44"
+            aria-label="에스씨엔지니어링 홈"
+          >
+            <Image
+              src="/images/logo-sce.jpg"
+              alt="에스씨엔지니어링 로고"
+              fill
+              priority
+              sizes="176px"
+              className="object-contain object-left"
+            />
+          </Link>
 
           <nav className="hidden md:block" aria-label="주요 메뉴">
-            <ul className="flex items-center gap-8">
-              {NAV_ITEMS.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    className="text-sm font-medium text-white/80 transition-colors hover:text-orange"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
+            <ul className="flex items-center gap-9">
+              {NAV_ITEMS.map((item) => {
+                const active = isActive(item.href);
+                return (
+                  <li key={item.href} className="relative py-2">
+                    <Link
+                      href={item.href}
+                      className={`text-sm font-bold transition-colors ${
+                        active ? "text-orange" : "text-navy hover:text-orange"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                    {active && (
+                      <BrandLine className="absolute inset-x-0 -bottom-0.5" />
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden"
+            className="text-navy md:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label="메뉴 열기"
           >
             <svg
-              className="h-6 w-6 text-white"
+              className="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth={1.8}
+              strokeWidth={2}
               stroke="currentColor"
               aria-hidden="true"
             >
@@ -75,23 +91,27 @@ export function SiteHeader({ companyName, shortName }: SiteHeaderProps) {
         </div>
       </Container>
 
+      <BrandLine />
+
       {open && (
         <nav
           id="mobile-menu"
-          className="border-t border-white/10 bg-graphite md:hidden"
+          className="bg-white md:hidden"
           aria-label="모바일 메뉴"
         >
           <Container>
-            <ul className="flex flex-col py-2">
+            <ul className="flex flex-col divide-y divide-ink/10 py-1">
               {NAV_ITEMS.map((item) => (
                 <li key={item.href}>
-                  <a
+                  <Link
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="block py-3 text-sm font-medium text-white/80 hover:text-orange"
+                    className={`block py-3 text-sm font-bold ${
+                      isActive(item.href) ? "text-orange" : "text-navy"
+                    }`}
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
