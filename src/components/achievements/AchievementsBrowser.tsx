@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Container } from "@/components/ui/Container";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { Achievement } from "@/lib/content/types";
 
 interface AchievementsBrowserProps {
@@ -14,11 +15,18 @@ interface AchievementsBrowserProps {
 export function AchievementsBrowser({ items, years }: AchievementsBrowserProps) {
   const [query, setQuery] = useState("");
   const [year, setYear] = useState<number | "all">("all");
+  const [category, setCategory] = useState<string>("all");
+
+  const categories = useMemo(
+    () => [...new Set(items.map((item) => item.category))],
+    [items],
+  );
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return items.filter((item) => {
       const matchYear = year === "all" || item.year === year;
+      const matchCategory = category === "all" || item.category === category;
       const haystack = [
         item.title,
         item.client,
@@ -29,22 +37,28 @@ export function AchievementsBrowser({ items, years }: AchievementsBrowserProps) 
         .join(" ")
         .toLowerCase();
       const matchQuery = q === "" || haystack.includes(q);
-      return matchYear && matchQuery;
+      return matchYear && matchCategory && matchQuery;
     });
-  }, [items, query, year]);
+  }, [items, query, year, category]);
 
-  const yearButtonClass = (on: boolean) =>
+  const chipClass = (on: boolean) =>
     `px-4 py-2 text-sm font-bold transition-colors ${
-      on ? "bg-navy text-white" : "bg-concrete text-navy hover:bg-navy/10"
-    }`;
+      on ? "bg-navy text-white" : "bg-white text-navy hover:bg-navy/10"
+    } border-2 border-ink/10`;
 
   return (
-    <section className="bg-white">
+    <section id="achievements" className="scroll-mt-24 bg-white">
       <Container>
-        <div className="py-12 sm:py-16">
-          {/* 검색 + 연도 필터 */}
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-            <div className="relative w-full max-w-sm">
+        <div className="py-20 sm:py-28">
+          <SectionHeading
+            eyebrow="Track Record"
+            title="실적현황"
+            description="연도별 주요 프로젝트 수행 실적입니다."
+          />
+
+          {/* 검색 */}
+          <div className="mt-10 flex flex-col gap-6">
+            <div className="relative w-full max-w-md">
               <input
                 type="search"
                 value={query}
@@ -67,11 +81,39 @@ export function AchievementsBrowser({ items, years }: AchievementsBrowserProps) 
               </svg>
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            {/* 사업분야 필터 */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="mr-1 w-16 font-mono text-xs font-bold uppercase tracking-wider text-steel">
+                분야
+              </span>
+              <button
+                type="button"
+                onClick={() => setCategory("all")}
+                className={chipClass(category === "all")}
+              >
+                전체
+              </button>
+              {categories.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setCategory(c)}
+                  className={chipClass(category === c)}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+
+            {/* 연도 필터 */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="mr-1 w-16 font-mono text-xs font-bold uppercase tracking-wider text-steel">
+                연도
+              </span>
               <button
                 type="button"
                 onClick={() => setYear("all")}
-                className={yearButtonClass(year === "all")}
+                className={chipClass(year === "all")}
               >
                 전체
               </button>
@@ -80,7 +122,7 @@ export function AchievementsBrowser({ items, years }: AchievementsBrowserProps) 
                   key={y}
                   type="button"
                   onClick={() => setYear(y)}
-                  className={yearButtonClass(year === y)}
+                  className={chipClass(year === y)}
                 >
                   {y}
                 </button>
@@ -94,13 +136,13 @@ export function AchievementsBrowser({ items, years }: AchievementsBrowserProps) 
 
           {/* 그리드 */}
           {filtered.length === 0 ? (
-            <div className="mt-6 border-2 border-dashed border-steel/40 p-14 text-center">
+            <div className="mt-4 border-2 border-dashed border-steel/40 p-14 text-center">
               <p className="text-lg font-bold text-navy">
                 검색 결과가 없습니다.
               </p>
             </div>
           ) : (
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map((item) => (
                 <Link
                   key={item.slug}

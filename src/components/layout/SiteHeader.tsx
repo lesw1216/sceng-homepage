@@ -2,18 +2,33 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
 import { NAV_ITEMS } from "./navigation";
 
 export function SiteHeader() {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
 
-  const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(`${href}/`);
+  // 단일 페이지 스크롤 스파이 (홈에 섹션이 있을 때만 동작)
+  useEffect(() => {
+    const sections = NAV_ITEMS.map((item) =>
+      document.getElementById(item.id),
+    ).filter((el): el is HTMLElement => el !== null);
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-white">
@@ -37,18 +52,18 @@ export function SiteHeader() {
           <nav className="hidden md:block" aria-label="주요 메뉴">
             <ul className="flex items-center gap-9">
               {NAV_ITEMS.map((item) => {
-                const active = isActive(item.href);
+                const on = active === item.id;
                 return (
-                  <li key={item.href} className="relative py-2">
+                  <li key={item.id} className="relative py-2">
                     <Link
                       href={item.href}
                       className={`text-sm font-bold transition-colors ${
-                        active ? "text-orange" : "text-navy hover:text-orange"
+                        on ? "text-orange" : "text-navy hover:text-orange"
                       }`}
                     >
                       {item.label}
                     </Link>
-                    {active && (
+                    {on && (
                       <BrandLine className="absolute inset-x-0 -bottom-0.5" />
                     )}
                   </li>
@@ -102,13 +117,11 @@ export function SiteHeader() {
           <Container>
             <ul className="flex flex-col divide-y divide-ink/10 py-1">
               {NAV_ITEMS.map((item) => (
-                <li key={item.href}>
+                <li key={item.id}>
                   <Link
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className={`block py-3 text-sm font-bold ${
-                      isActive(item.href) ? "text-orange" : "text-navy"
-                    }`}
+                    className="block py-3 text-sm font-bold text-navy"
                   >
                     {item.label}
                   </Link>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { businessAreaImage } from "@/lib/images";
 import type { BusinessArea } from "@/lib/content/types";
 
@@ -20,11 +21,17 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
   const area = areas.find((a) => a.key === active) ?? areas[0];
 
   return (
-    <section className="bg-white">
+    <section id="business" className="scroll-mt-24 bg-white">
       <Container>
-        <div className="py-12 sm:py-16">
-          {/* 탭 네비게이션 (헤더 네비와 동일한 형태) */}
-          <div className="flex flex-wrap gap-x-8 gap-y-2">
+        <div className="py-20 sm:py-28">
+          <SectionHeading
+            eyebrow="Core Business"
+            title="사업영역"
+            description="산업 자동화부터 빌딩 자동화, 데이터센터 인프라까지 통합 제어 솔루션을 제공합니다."
+          />
+
+          {/* 탭 (헤더 네비와 동일한 형태) */}
+          <div className="mt-10 flex flex-wrap gap-x-8 gap-y-2 border-b border-ink/10">
             {areas.map((a) => {
               const on = a.key === area.key;
               return (
@@ -49,7 +56,6 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
               );
             })}
           </div>
-          <BrandLine className="mt-0" />
 
           {/* 좌측 사진 / 우측 내용 */}
           <div className="mt-10 grid gap-8 lg:grid-cols-2">
@@ -67,9 +73,9 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-orange">
                 {area.titleEn}
               </p>
-              <h2 className="mt-2 text-3xl font-extrabold text-navy sm:text-4xl">
+              <h3 className="mt-2 text-3xl font-extrabold text-navy sm:text-4xl">
                 {area.title}
-              </h2>
+              </h3>
               <ul className="mt-8 grid gap-x-6 gap-y-3 sm:grid-cols-2">
                 {area.items.map((item) => (
                   <li

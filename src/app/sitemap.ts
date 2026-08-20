@@ -4,21 +4,15 @@ import { SITE_URL } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const routes = [
-    "",
-    "/about",
-    "/technology",
-    "/business",
-    "/achievements",
-    "/contact",
-  ];
 
-  const staticEntries: MetadataRoute.Sitemap = routes.map((route) => ({
-    url: `${SITE_URL}${route}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: route === "" ? 1 : 0.8,
-  }));
+  const home: MetadataRoute.Sitemap = [
+    {
+      url: SITE_URL,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 1,
+    },
+  ];
 
   const items = await getAchievements();
   const achievementEntries: MetadataRoute.Sitemap = items.map((item) => ({
@@ -28,5 +22,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...achievementEntries];
+  return [...home, ...achievementEntries];
 }

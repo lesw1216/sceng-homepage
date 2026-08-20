@@ -34,7 +34,7 @@ export function SiteFooter({ company }: SiteFooterProps) {
                 대표전화 {contact.phone} · 이메일{" "}
                 <a
                   href={`mailto:${contact.email}`}
-                  className="font-medium text-navy hover:text-orange"
+                  className="text-navy hover:text-orange"
                 >
                   {contact.email}
                 </a>
@@ -55,7 +55,7 @@ export function SiteFooter({ company }: SiteFooterProps) {
           </nav>
         </div>
 
-        <div className="border-t border-ink/10 py-6 text-xs text-ink/50">
+        <div className="border-t border-ink/10 py-6 text-center text-sm text-ink/70">
           © {new Date().getFullYear()} {company.name}. All rights reserved.
         </div>
       </Container>

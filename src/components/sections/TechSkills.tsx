@@ -1,64 +1,48 @@
-import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
-import { accentText } from "@/lib/accent";
+import { BrandLine } from "@/components/ui/BrandLine";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { TechPhase } from "@/lib/content/types";
 
 export function TechSkills({ phases }: { phases: TechPhase[] }) {
   return (
-    <section className="bg-white">
+    <section id="tech" className="scroll-mt-24 bg-white">
       <Container>
-        <div className="py-16 sm:py-20">
-          <p className="max-w-3xl text-lg leading-8 text-ink/80">
-            자동화시스템을 <strong className="text-navy">분석·설계</strong>부터{" "}
-            <strong className="text-navy">개발·제작</strong>,{" "}
-            <strong className="text-navy">설치·시운전·교육</strong>까지 하나의
-            흐름으로 책임지고 종합적인 서비스를 제공합니다.
-          </p>
+        <div className="py-20 sm:py-28">
+          <SectionHeading
+            eyebrow="Technical Skills"
+            title="보유기술"
+            description="분석·설계부터 개발·제작, 설치·시운전·교육까지 하나의 흐름으로 책임지고 종합적인 서비스를 제공합니다."
+          />
 
-          {/* Stepper: 전체 수행 흐름 */}
-          <ol className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-stretch">
-            {phases.map((phase, i) => (
-              <li key={phase.title} className="flex items-center gap-3 sm:flex-1">
-                <div className="w-full bg-concrete p-5">
-                  <BrandLine className="mb-4" />
-                  <span className="font-mono text-2xl font-extrabold text-orange">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <p className="mt-1 text-lg font-extrabold text-navy">
-                    {phase.title}
-                  </p>
-                  <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-steel">
-                    {phase.titleEn}
-                  </p>
-                </div>
-                {i < phases.length - 1 && (
-                  <span
-                    className="shrink-0 text-2xl font-bold text-orange"
-                    aria-hidden="true"
-                  >
-                    →
-                  </span>
-                )}
-              </li>
-            ))}
-          </ol>
+          {/* Stepper: 노드(단계 제목)를 연결선으로 이어 하나의 흐름으로 표현.
+              단계 제목은 노드에만 있고 아래 상세에는 반복하지 않는다. */}
+          <div className="relative mt-16">
+            {/* 노드를 잇는 연결선 (데스크톱). 노드 헤더 배경(흰색) 사이 간격에만 보인다. */}
+            <span
+              aria-hidden="true"
+              className="absolute inset-x-8 top-5 hidden -translate-y-1/2 sm:block"
+            >
+              <BrandLine />
+            </span>
 
-          {/* 단계별 상세 */}
-          <div className="mt-14 grid gap-5 lg:grid-cols-3">
-            {phases.map((phase, i) => (
-              <div key={phase.title} className="flex flex-col bg-white">
-                <BrandLine />
-                <div className="flex flex-col border-2 border-t-0 border-ink/10 p-7">
-                  <div className="flex items-baseline gap-3">
-                    <span className="font-mono text-2xl font-extrabold text-orange">
-                      {String(i + 1).padStart(2, "0")}
+            <ol className="grid gap-x-6 gap-y-12 sm:grid-cols-3">
+              {phases.map((phase, i) => (
+                <li key={phase.title} className="flex flex-col">
+                  <div className="relative flex items-center gap-3 bg-white pr-3">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-orange font-mono text-base font-extrabold text-white">
+                      {i + 1}
                     </span>
-                    <h3 className="text-xl font-extrabold text-navy">
-                      {phase.title}
-                    </h3>
+                    <div>
+                      <h3 className="text-lg font-extrabold leading-tight text-navy">
+                        {phase.title}
+                      </h3>
+                      <p className="font-mono text-[11px] uppercase tracking-wider text-steel">
+                        {phase.titleEn}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="mt-6 space-y-5">
+                  <div className="mt-7 space-y-5 sm:pl-1">
                     {phase.groups.map((group) => (
                       <div key={group.label ?? group.items[0]}>
                         {group.label && (
@@ -72,9 +56,7 @@ export function TechSkills({ phases }: { phases: TechPhase[] }) {
                               key={item}
                               className="flex gap-2 text-sm leading-6 text-ink/80"
                             >
-                              <span
-                                className={`mt-2 h-1.5 w-1.5 shrink-0 ${accentText[phase.accent] === "text-orange" ? "bg-orange" : "bg-navy"}`}
-                              />
+                              <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-orange" />
                               {item}
                             </li>
                           ))}
@@ -82,9 +64,9 @@ export function TechSkills({ phases }: { phases: TechPhase[] }) {
                       </div>
                     ))}
                   </div>
-                </div>
-              </div>
-            ))}
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </Container>

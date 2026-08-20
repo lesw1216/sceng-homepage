@@ -21,14 +21,18 @@
 - 그라디언트가 필요하면 위 토큰 조합만 사용.
 
 ## 브랜드 라인 (BrandLine)
-- 로고 규칙을 선(divider)에 적용: **오렌지 : 네이비 = 2 : 1**, 두 색 경계는 "/" 형태의 사선 간격.
-- 단색 border 대신 주요 구획선(섹션 구분·헤더/푸터 경계·탭/nav active 밑줄·카드 상단 바)에 `components/ui/BrandLine`을 사용한다.
+- 로고 규칙을 선(divider)에 적용: **오렌지 : 네이비 = 2 : 1**, 두 색 경계는 "/" 형태의 **2px** 사선 간격.
+- 구현: flex 2:1 + `gap-[2px]` + `skewX(-20deg)`(overflow-hidden). `components/ui/BrandLine`.
+- 헤더/푸터 경계, nav·탭 active 밑줄 등 **주요 구획선에만** 사용. 섹션마다 반복되는 구분선은 넣지 않는다.
 - 세밀한 내부 1px 구분선(표 행 등)은 `border-ink/10`로 가볍게 유지.
 
 ## 레이아웃 / 페이지
-- **멀티페이지**: 메뉴별 라우트(`/about` `/technology` `/business` `/achievements` `/contact`), 실적 상세 `/achievements/[slug]`.
-- 헤더/푸터는 **화이트 배경**, `RootLayout`에서 공통 렌더. 헤더 로고는 `public/images/logo-sce.jpg`.
-- 페이지 상단은 `PageHero`(eyebrow + h1 + BrandLine)로 통일.
+- **단일 페이지**(`/`) + 앵커 섹션: `#top` `#about` `#tech` `#business` `#achievements` `#contact`. nav는 `/#섹션` 앵커.
+- 실적 상세만 별도 라우트 `/achievements/[slug]` (목록 복귀는 `/#achievements`).
+- **모든 섹션 배경은 흰색으로 통일**. 색은 텍스트·테두리·소형 액센트에만.
+- 헤더/푸터는 화이트, `RootLayout` 공통. 헤더 로고 `public/images/logo-sce.jpg`.
+- 섹션 제목은 `SectionHeading`(오렌지 바 + 모노 라벨 + h2, 구분선 없음). 상세 페이지는 `PageHero`.
+- 보유기술 Stepper: 단계 제목은 노드에만 두고 상세에는 반복하지 않으며, 노드는 연결선으로 잇는다.
 
 ## 인더스트리얼 스타일 원칙 (가시성 우선)
 - **대비를 강하게**: 본문 텍스트는 `text-ink/80` 이상, 제목은 `text-navy`/`text-white`. 연한 회색(`/50` 이하)은 라벨·메타에만.
