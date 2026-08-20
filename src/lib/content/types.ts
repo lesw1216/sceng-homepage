@@ -103,6 +103,8 @@ export interface Metric {
 
 /** 실적 현황 1건 = 게시글 1건 (프로젝트) */
 export interface Achievement extends ContentRecord {
+  /** 실제 실적이 아닌 UI 확인용 레코드 */
+  isDemo?: boolean;
   /** 연도 (필터·정렬 키) */
   year: number;
   /** 분류(예: "산업 자동화", "빌딩 자동화", "데이터센터") */

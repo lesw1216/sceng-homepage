@@ -1,4 +1,4 @@
-import { achievements } from "@/content/achievements";
+import { achievementPreview, achievements } from "@/content/achievements";
 import type { Achievement } from "./types";
 
 /**
@@ -13,7 +13,13 @@ export async function getAchievements(): Promise<Achievement[]> {
 export async function getAchievementBySlug(
   slug: string,
 ): Promise<Achievement | null> {
+  if (slug === achievementPreview.slug) return achievementPreview;
   return achievements.find((achievement) => achievement.slug === slug) ?? null;
+}
+
+/** 실제 데이터가 들어오기 전 상세 화면 확인용 데모 레코드 */
+export async function getAchievementPreview(): Promise<Achievement> {
+  return achievementPreview;
 }
 
 /** 실적이 존재하는 연도 목록 (내림차순) */

@@ -53,6 +53,11 @@ export async function generateMetadata(): Promise<Metadata> {
       url: SITE_URL,
       locale: "ko_KR",
     },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: SITE_DESCRIPTION,
+    },
   };
 }
 

@@ -7,7 +7,7 @@ export function TechSkills({ phases }: { phases: TechPhase[] }) {
   return (
     <section id="tech" className="scroll-mt-24 bg-white">
       <Container>
-        <div className="py-20 sm:py-28">
+        <div className="border-t border-ink/10 py-24 sm:py-32">
           <SectionHeading
             eyebrow="Technical Skills"
             title="보유기술"
@@ -16,7 +16,7 @@ export function TechSkills({ phases }: { phases: TechPhase[] }) {
 
           {/* Stepper: 노드(단계 제목)를 연결선으로 이어 하나의 흐름으로 표현.
               단계 제목은 노드에만 있고 아래 상세에는 반복하지 않는다. */}
-          <div className="relative mt-16">
+          <div className="relative mt-20">
             {/* 노드를 잇는 연결선 (데스크톱). 노드 헤더 배경(흰색) 사이 간격에만 보인다. */}
             <span
               aria-hidden="true"
@@ -25,11 +25,11 @@ export function TechSkills({ phases }: { phases: TechPhase[] }) {
               <BrandLine />
             </span>
 
-            <ol className="grid gap-x-6 gap-y-12 sm:grid-cols-3">
+            <ol className="grid gap-x-10 gap-y-12 sm:grid-cols-3">
               {phases.map((phase, i) => (
                 <li key={phase.title} className="flex flex-col">
                   <div className="relative flex items-center gap-3 bg-white pr-3">
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-orange font-mono text-base font-extrabold text-white">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center bg-orange font-mono text-base font-extrabold text-white">
                       {i + 1}
                     </span>
                     <div>
@@ -42,7 +42,7 @@ export function TechSkills({ phases }: { phases: TechPhase[] }) {
                     </div>
                   </div>
 
-                  <div className="mt-7 space-y-5 sm:pl-1">
+                  <div className="mt-8 flex-1 space-y-6 border border-ink/15 bg-white p-6">
                     {phase.groups.map((group) => (
                       <div key={group.label ?? group.items[0]}>
                         {group.label && (

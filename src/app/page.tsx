@@ -6,6 +6,7 @@ import { HeroCarousel } from "@/components/sections/HeroCarousel";
 import { TechSkills } from "@/components/sections/TechSkills";
 import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
 import {
+  getAchievementPreview,
   getAchievements,
   getAchievementYears,
 } from "@/lib/content/achievements";
@@ -14,22 +15,27 @@ import { getCompanyProfile } from "@/lib/content/company";
 import { getTechPhases } from "@/lib/content/techSkills";
 
 export default async function Home() {
-  const [profile, phases, areas, achievements, years] = await Promise.all([
+  const [profile, phases, areas, achievements, years, achievementPreview] = await Promise.all([
     getCompanyProfile(),
     getTechPhases(),
     getBusinessAreas(),
     getAchievements(),
     getAchievementYears(),
+    getAchievementPreview(),
   ]);
 
   return (
     <>
       <OrganizationJsonLd company={profile.info} />
-      <HeroCarousel />
+      <HeroCarousel company={profile.info} />
       <About profile={profile} />
       <TechSkills phases={phases} />
       <BusinessTabs areas={areas} />
-      <AchievementsBrowser items={achievements} years={years} />
+      <AchievementsBrowser
+        items={achievements}
+        years={years}
+        preview={achievementPreview}
+      />
       <Contact company={profile.info} />
     </>
   );

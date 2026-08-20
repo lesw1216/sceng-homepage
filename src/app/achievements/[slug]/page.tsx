@@ -7,12 +7,16 @@ import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import {
   getAchievementBySlug,
+  getAchievementPreview,
   getAchievements,
 } from "@/lib/content/achievements";
 
 export async function generateStaticParams() {
-  const items = await getAchievements();
-  return items.map((item) => ({ slug: item.slug }));
+  const [items, preview] = await Promise.all([
+    getAchievements(),
+    getAchievementPreview(),
+  ]);
+  return [...items, preview].map((item) => ({ slug: item.slug }));
 }
 
 export async function generateMetadata({
@@ -24,9 +28,14 @@ export async function generateMetadata({
   const item = await getAchievementBySlug(slug);
   if (!item) return {};
   return {
-    title: item.title,
+    title: item.isDemo ? `DEMO | ${item.title}` : item.title,
     description: item.summary,
     alternates: { canonical: `/achievements/${slug}` },
+    robots: item.isDemo ? { index: false, follow: false } : undefined,
+    openGraph: {
+      title: item.isDemo ? `DEMO | ${item.title}` : item.title,
+      description: item.summary,
+    },
   };
 }
 
@@ -49,12 +58,20 @@ export default async function AchievementDetailPage({
 
   return (
     <>
-      <PageHero eyebrow={`Project · ${item.year}`} title={item.title} />
+      <PageHero
+        eyebrow={item.isDemo ? "Demo Project · UI Preview" : `Project · ${item.year}`}
+        title={item.title}
+      />
       <section className="bg-white">
         <Container>
-          <div className="grid gap-10 py-12 sm:py-16 lg:grid-cols-[1.5fr_1fr]">
+          {item.isDemo && (
+            <div className="mt-10 border border-orange bg-concrete/40 px-5 py-4 text-sm font-bold leading-6 text-navy">
+              이 페이지는 실제 수행 실적이 아닌 상세 화면 디자인 확인용 데모입니다.
+            </div>
+          )}
+          <div className="grid gap-12 py-12 sm:py-16 lg:grid-cols-[1.5fr_1fr]">
             <div>
-              <div className="relative aspect-[16/10] overflow-hidden">
+              <div className="relative aspect-[16/10] overflow-hidden bg-concrete">
                 <Image
                   src={item.image}
                   alt={`${item.title} 현장`}
@@ -85,14 +102,14 @@ export default async function AchievementDetailPage({
                   실적현황 목록
                 </Link>
               </div>
-              <p className="mt-8 text-base leading-8 text-ink/80">
+              <p className="mt-10 text-xl font-bold leading-9 text-navy">
                 {item.summary}
               </p>
-              <p className="mt-4 text-base leading-8 text-ink/80">{item.body}</p>
+              <p className="mt-6 text-base leading-8 text-ink/80">{item.body}</p>
             </div>
 
             <aside>
-              <div className="border-2 border-ink/10">
+              <div className="sticky top-28 border border-ink/15">
                 <div className="p-6">
                   <BrandLine className="mb-5" />
                   <h2 className="font-mono text-sm font-bold uppercase tracking-wider text-orange">

@@ -31,12 +31,12 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-white">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm">
       <Container>
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-20 items-center justify-between lg:h-24">
           <Link
             href="/"
-            className="relative block h-12 w-44"
+            className="relative block h-12 w-40 sm:w-44"
             aria-label="에스씨엔지니어링 홈"
           >
             <Image
@@ -50,7 +50,7 @@ export function SiteHeader() {
           </Link>
 
           <nav className="hidden md:block" aria-label="주요 메뉴">
-            <ul className="flex items-center gap-9">
+            <ul className="flex items-center gap-8 lg:gap-10">
               {NAV_ITEMS.map((item) => {
                 const on = active === item.id;
                 return (

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -15,6 +15,7 @@ interface BusinessTabsProps {
 
 /** 사업영역: 상단 탭으로 분야를 선택, 좌측 사진 + 우측 내용 표시 */
 export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [active, setActive] = useState(
     () => areas.find((a) => a.key === initialKey)?.key ?? areas[0]?.key,
   );
@@ -23,7 +24,7 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
   return (
     <section id="business" className="scroll-mt-24 bg-white">
       <Container>
-        <div className="py-20 sm:py-28">
+        <div className="border-t border-ink/10 py-24 sm:py-32">
           <SectionHeading
             eyebrow="Core Business"
             title="사업영역"
@@ -31,16 +32,30 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
           />
 
           {/* 탭 (헤더 네비와 동일한 형태) */}
-          <div className="mt-10 flex flex-wrap gap-x-8 gap-y-2 border-b border-ink/10">
-            {areas.map((a) => {
+          <div className="mt-12 flex flex-wrap gap-x-8 gap-y-2 border-b border-ink/10" role="tablist" aria-label="사업영역 선택">
+            {areas.map((a, index) => {
               const on = a.key === area.key;
               return (
                 <button
                   key={a.key}
                   type="button"
+                  ref={(element) => {
+                    tabRefs.current[index] = element;
+                  }}
                   onClick={() => setActive(a.key)}
-                  className="relative py-3"
-                  aria-current={on}
+                  onKeyDown={(event) => {
+                    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+                    event.preventDefault();
+                    const direction = event.key === "ArrowRight" ? 1 : -1;
+                    const nextIndex = (index + direction + areas.length) % areas.length;
+                    setActive(areas[nextIndex].key);
+                    tabRefs.current[nextIndex]?.focus();
+                  }}
+                  className="relative py-4"
+                  role="tab"
+                  aria-selected={on}
+                  aria-controls="business-panel"
+                  tabIndex={on ? 0 : -1}
                 >
                   <span
                     className={`text-base font-bold transition-colors ${
@@ -58,8 +73,8 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
           </div>
 
           {/* 좌측 사진 / 우측 내용 */}
-          <div className="mt-10 grid gap-8 lg:grid-cols-2">
-            <div className="relative aspect-[4/3] overflow-hidden bg-navy lg:aspect-auto lg:min-h-[440px]">
+          <div id="business-panel" role="tabpanel" className="mt-12 grid gap-10 lg:grid-cols-[1.08fr_0.92fr]">
+            <div className="relative aspect-[4/3] overflow-hidden bg-navy lg:aspect-auto lg:min-h-[500px]">
               <Image
                 src={businessAreaImage[area.key]}
                 alt={`${area.title} 현장`}
@@ -69,14 +84,14 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
               />
             </div>
 
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center border-y border-ink/15 py-10 lg:px-8">
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-orange">
                 {area.titleEn}
               </p>
-              <h3 className="mt-2 text-3xl font-extrabold text-navy sm:text-4xl">
+              <h3 className="mt-3 text-4xl font-extrabold tracking-tight text-navy sm:text-5xl">
                 {area.title}
               </h3>
-              <ul className="mt-8 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+              <ul className="mt-10 grid gap-x-6 gap-y-4 sm:grid-cols-2">
                 {area.items.map((item) => (
                   <li
                     key={item}

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { Achievement } from "@/lib/content/types";
@@ -10,24 +11,26 @@ import type { Achievement } from "@/lib/content/types";
 interface AchievementsBrowserProps {
   items: Achievement[];
   years: number[];
+  preview: Achievement;
 }
 
-export function AchievementsBrowser({ items, years }: AchievementsBrowserProps) {
+export function AchievementsBrowser({
+  items,
+  years,
+  preview,
+}: AchievementsBrowserProps) {
   const [query, setQuery] = useState("");
   const [year, setYear] = useState<number | "all">("all");
-  const [category, setCategory] = useState<string>("all");
+  const [category, setCategory] = useState("all");
 
   const categories = useMemo(
     () => [...new Set(items.map((item) => item.category))],
     [items],
   );
-
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const normalizedQuery = query.trim().toLowerCase();
     return items.filter((item) => {
-      const matchYear = year === "all" || item.year === year;
-      const matchCategory = category === "all" || item.category === category;
-      const haystack = [
+      const searchable = [
         item.title,
         item.client,
         item.orderer,
@@ -36,162 +39,163 @@ export function AchievementsBrowser({ items, years }: AchievementsBrowserProps) 
       ]
         .join(" ")
         .toLowerCase();
-      const matchQuery = q === "" || haystack.includes(q);
-      return matchYear && matchCategory && matchQuery;
+      return (
+        (year === "all" || item.year === year) &&
+        (category === "all" || item.category === category) &&
+        (normalizedQuery === "" || searchable.includes(normalizedQuery))
+      );
     });
-  }, [items, query, year, category]);
+  }, [category, items, query, year]);
 
-  const chipClass = (on: boolean) =>
-    `px-4 py-2 text-sm font-bold transition-colors ${
-      on ? "bg-navy text-white" : "bg-white text-navy hover:bg-navy/10"
-    } border-2 border-ink/10`;
+  const chipClass = (isActive: boolean) =>
+    `border px-4 py-2 text-sm font-bold transition-colors ${
+      isActive
+        ? "border-navy bg-navy text-white"
+        : "border-ink/15 bg-white text-navy hover:border-orange hover:text-orange"
+    }`;
 
   return (
     <section id="achievements" className="scroll-mt-24 bg-white">
       <Container>
-        <div className="py-20 sm:py-28">
+        <div className="border-t border-ink/10 py-24 sm:py-32">
           <SectionHeading
             eyebrow="Track Record"
             title="실적현황"
-            description="연도별 주요 프로젝트 수행 실적입니다."
+            description="검증된 수행 경험은 정확한 자료를 바탕으로 공개합니다."
           />
 
-          {/* 검색 */}
-          <div className="mt-10 flex flex-col gap-6">
-            <div className="relative w-full max-w-md">
-              <input
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="프로젝트명 · 고객사 · 지역 검색"
-                aria-label="실적 검색"
-                className="w-full border-2 border-ink/15 bg-white py-3 pl-11 pr-4 text-sm text-ink outline-none focus:border-orange"
-              />
-              <svg
-                className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-steel"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
+          {items.length === 0 ? (
+            <div className="mt-14 grid overflow-hidden border border-ink/15 lg:grid-cols-[1.2fr_0.8fr]">
+              <div className="relative min-h-[360px] bg-navy p-8 text-white sm:p-12">
+                <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-amber">
+                  Official Records
+                </span>
+                <p className="mt-8 max-w-lg text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                  공식 수행 실적 자료를 준비하고 있습니다.
+                </p>
+                <p className="mt-6 max-w-xl leading-7 text-white/75">
+                  고객사와 프로젝트 정보를 검토한 뒤 정확한 내용으로 업데이트하겠습니다.
+                  자세한 수행 역량은 보유기술과 사업영역에서 확인하실 수 있습니다.
+                </p>
+                <div className="absolute inset-x-0 bottom-0">
+                  <BrandLine />
+                </div>
+              </div>
+
+              <Link
+                href={`/achievements/${preview.slug}`}
+                className="group flex flex-col bg-white p-8 transition-colors hover:bg-concrete/50 sm:p-12"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M9 3.5a5.5 5.5 0 1 0 3.4 9.9l3.6 3.6a1 1 0 0 0 1.4-1.4l-3.6-3.6A5.5 5.5 0 0 0 9 3.5ZM5.5 9a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-
-            {/* 사업분야 필터 */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="mr-1 w-16 font-mono text-xs font-bold uppercase tracking-wider text-steel">
-                분야
-              </span>
-              <button
-                type="button"
-                onClick={() => setCategory("all")}
-                className={chipClass(category === "all")}
-              >
-                전체
-              </button>
-              {categories.map((c) => (
-                <button
-                  key={c}
-                  type="button"
-                  onClick={() => setCategory(c)}
-                  className={chipClass(category === c)}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-
-            {/* 연도 필터 */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="mr-1 w-16 font-mono text-xs font-bold uppercase tracking-wider text-steel">
-                연도
-              </span>
-              <button
-                type="button"
-                onClick={() => setYear("all")}
-                className={chipClass(year === "all")}
-              >
-                전체
-              </button>
-              {years.map((y) => (
-                <button
-                  key={y}
-                  type="button"
-                  onClick={() => setYear(y)}
-                  className={chipClass(year === y)}
-                >
-                  {y}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <p className="mt-6 font-mono text-sm text-steel">
-            {filtered.length} projects
-          </p>
-
-          {/* 그리드 */}
-          {filtered.length === 0 ? (
-            <div className="mt-4 border-2 border-dashed border-steel/40 p-14 text-center">
-              <p className="text-lg font-bold text-navy">
-                검색 결과가 없습니다.
-              </p>
+                <div className="flex items-center justify-between gap-4">
+                  <span className="bg-orange px-3 py-1 font-mono text-xs font-bold tracking-wider text-white">
+                    DEMO
+                  </span>
+                  <span className="font-mono text-xs text-steel">UI PREVIEW</span>
+                </div>
+                <div className="relative mt-8 aspect-[16/9] overflow-hidden">
+                  <Image
+                    src={preview.image}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 38vw, 100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <h3 className="mt-6 text-2xl font-extrabold leading-snug text-navy">
+                  실적 상세 디자인 미리보기
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-ink/70">
+                  실제 수행 실적이 아닌 상세 페이지 구성 확인용 데모입니다.
+                </p>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-orange">
+                  상세 화면 확인 <span aria-hidden="true">↗</span>
+                </span>
+              </Link>
             </div>
           ) : (
-            <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((item) => (
-                <Link
-                  key={item.slug}
-                  href={`/achievements/${item.slug}`}
-                  className="group flex flex-col border-2 border-ink/10 bg-white transition-colors hover:border-orange"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <Image
-                      src={item.image}
-                      alt={`${item.title} 현장`}
-                      fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <span className="absolute left-0 top-0 bg-orange px-3 py-1 text-xs font-bold text-white">
-                      {item.category}
-                    </span>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <span className="font-mono text-xs font-bold text-orange">
-                      {item.year}
-                    </span>
-                    <h3 className="mt-1 text-lg font-extrabold leading-snug text-navy">
-                      {item.title}
-                    </h3>
-                    <dl className="mt-4 space-y-1 text-xs text-ink/70">
-                      <div className="flex gap-2">
-                        <dt className="w-12 shrink-0 font-bold text-steel">
-                          고객사
-                        </dt>
-                        <dd>{item.client}</dd>
+            <>
+              <div className="mt-12 grid gap-5 border-y border-ink/10 py-6 lg:grid-cols-[1fr_auto]">
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="프로젝트명 · 고객사 · 지역 검색"
+                  aria-label="실적 검색"
+                  className="w-full border border-ink/20 bg-white px-4 py-3 text-sm text-ink outline-none focus:border-orange lg:max-w-md"
+                />
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setCategory("all")}
+                    className={chipClass(category === "all")}
+                  >
+                    전체 분야
+                  </button>
+                  {categories.map((itemCategory) => (
+                    <button
+                      key={itemCategory}
+                      type="button"
+                      onClick={() => setCategory(itemCategory)}
+                      className={chipClass(category === itemCategory)}
+                    >
+                      {itemCategory}
+                    </button>
+                  ))}
+                  <select
+                    value={year}
+                    onChange={(event) =>
+                      setYear(event.target.value === "all" ? "all" : Number(event.target.value))
+                    }
+                    aria-label="실적 연도"
+                    className="border border-ink/20 bg-white px-4 py-2 text-sm font-bold text-navy"
+                  >
+                    <option value="all">전체 연도</option>
+                    {years.map((itemYear) => (
+                      <option key={itemYear} value={itemYear}>
+                        {itemYear}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {filtered.length === 0 ? (
+                <div className="mt-8 border border-dashed border-steel/50 p-14 text-center">
+                  <p className="text-lg font-bold text-navy">검색 결과가 없습니다.</p>
+                </div>
+              ) : (
+                <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {filtered.map((item) => (
+                    <Link
+                      key={item.slug}
+                      href={`/achievements/${item.slug}`}
+                      className="group border border-ink/15 bg-white transition-colors hover:border-orange"
+                    >
+                      <div className="relative aspect-[16/10] overflow-hidden">
+                        <Image
+                          src={item.image}
+                          alt={`${item.title} 현장`}
+                          fill
+                          sizes="(min-width: 1024px) 33vw, 50vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
                       </div>
-                      <div className="flex gap-2">
-                        <dt className="w-12 shrink-0 font-bold text-steel">
-                          위치
-                        </dt>
-                        <dd>{item.location}</dd>
+                      <div className="p-6">
+                        <span className="font-mono text-xs font-bold text-orange">
+                          {item.year} · {item.category}
+                        </span>
+                        <h3 className="mt-2 text-xl font-extrabold text-navy">
+                          {item.title}
+                        </h3>
+                        <p className="mt-4 text-sm text-ink/70">
+                          {item.client} · {item.location}
+                        </p>
                       </div>
-                      <div className="flex gap-2">
-                        <dt className="w-12 shrink-0 font-bold text-steel">
-                          기간
-                        </dt>
-                        <dd>{item.period}</dd>
-                      </div>
-                    </dl>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </Container>

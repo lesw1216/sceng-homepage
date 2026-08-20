@@ -16,7 +16,7 @@ export function SiteFooter({ company }: SiteFooterProps) {
       {/* 본문과 푸터의 경계 */}
       <BrandLine />
       <Container>
-        <div className="grid gap-10 py-14 md:grid-cols-[1.4fr_1fr]">
+        <div className="grid gap-10 py-16 md:grid-cols-[1.4fr_1fr]">
           <div>
             <div className="relative h-12 w-44">
               <Image
@@ -42,7 +42,7 @@ export function SiteFooter({ company }: SiteFooterProps) {
             </address>
           </div>
 
-          <nav aria-label="푸터 메뉴">
+          <nav className="md:justify-self-end" aria-label="푸터 메뉴">
             <ul className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm font-medium text-navy">
               {NAV_ITEMS.map((item) => (
                 <li key={item.href}>

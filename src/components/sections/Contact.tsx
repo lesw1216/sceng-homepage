@@ -35,19 +35,19 @@ export function Contact({ company }: { company: CompanyInfo }) {
   return (
     <section id="contact" className="scroll-mt-24 bg-white">
       <Container>
-        <div className="py-20 sm:py-28">
+        <div className="border-t border-ink/10 py-24 sm:py-32">
           <SectionHeading
             eyebrow="Contact"
             title="Contact"
             description="문의 사항이 있으시면 언제든지 연락 주시기 바랍니다."
           />
 
-          <div className="mt-10 grid gap-8 lg:grid-cols-2">
-            <dl className="border-2 border-ink/10">
+          <div className="mt-14 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+            <dl className="border-y border-ink/15">
               {rows.map((row) => (
                 <div
                   key={row.label}
-                  className="flex gap-4 border-b border-ink/10 px-6 py-4 last:border-b-0"
+                  className="grid gap-2 border-b border-ink/10 py-5 last:border-b-0 sm:grid-cols-[120px_1fr]"
                 >
                   <dt className="w-20 shrink-0 font-mono text-xs font-bold uppercase tracking-wider text-orange">
                     {row.label}
@@ -66,13 +66,13 @@ export function Contact({ company }: { company: CompanyInfo }) {
             </dl>
 
             {/* 주소 안내 카드 (흰색 배경) */}
-            <div className="flex flex-col justify-between border-2 border-ink/10 p-8">
+            <div className="relative flex flex-col justify-between overflow-hidden bg-navy p-8 text-white sm:p-10">
               <div>
                 <span className="block h-6 w-1.5 bg-orange" aria-hidden="true" />
-                <h3 className="mt-5 text-2xl font-extrabold text-navy">
+                <h3 className="mt-5 text-3xl font-extrabold text-white">
                   {company.name}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-ink/70">
+                <p className="mt-4 text-sm leading-7 text-white/75">
                   {contact.address}
                 </p>
               </div>

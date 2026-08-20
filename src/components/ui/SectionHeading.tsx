@@ -11,18 +11,20 @@ export function SectionHeading({
   description,
 }: SectionHeadingProps) {
   return (
-    <header className="max-w-3xl">
-      <div className="flex items-center gap-3">
-        <span className="h-7 w-1.5 bg-orange" aria-hidden="true" />
-        <span className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-steel">
+    <header className="max-w-4xl">
+      <div className="flex items-center gap-4">
+        <span className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-orange">
           {eyebrow}
         </span>
+        <span className="h-px w-12 bg-orange" aria-hidden="true" />
       </div>
-      <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">
+      <h2 className="mt-5 text-4xl font-extrabold tracking-[-0.04em] text-navy sm:text-5xl">
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-lg leading-8 text-ink/70">{description}</p>
+        <p className="mt-5 max-w-3xl text-lg leading-8 text-ink/80 sm:text-xl">
+          {description}
+        </p>
       )}
     </header>
   );
