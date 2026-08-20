@@ -34,8 +34,14 @@
 - 본문 최소 크기 16px, 대비 WCAG AA(4.5:1) 이상.
 - 색만으로 정보를 전달하지 않는다(아이콘/텍스트 병행).
 
+## 사진 (Photography)
+- 실제 산업 현장 사진으로 색감·신뢰감을 준다(과한 그라디언트·글로우 등 "AI틱" 장식 지양).
+- 이미지는 `public/images/`에 자체 호스팅, `next/image`로 렌더(`fill` + `sizes`, LCP는 `priority`).
+- 사진 위 텍스트는 `navy` 그라디언트 오버레이로 대비 확보, `alt` 필수(→ seo.md).
+- 출처: Unsplash 등 상업적 사용·출처표기 불필요한 무료 라이선스만 사용.
+
 ## 타이포그래피
-- 폰트: `--font-sans`(Geist) 기본. 코드/수치 강조는 `--font-mono`.
+- 폰트: `--font-sans`(**Noto Sans KR**, self-host) 기본. 넘버·영문 라벨 강조는 `--font-mono`(Geist Mono).
 - 스케일(권장): `text-sm` 보조 → `text-base` 본문 → `text-lg/xl` 리드 → `text-3xl~5xl` 헤드라인.
 - 제목은 `font-semibold`~`font-bold` + `tracking-tight`, 본문은 `leading-7`~`leading-8`.
 - heading 계층(h1→h6)을 시각 크기가 아니라 문서 구조 기준으로 사용(SEO·접근성). 크기는 className으로 조정.

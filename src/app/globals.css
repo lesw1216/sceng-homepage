@@ -21,7 +21,7 @@
   --color-concrete: #e9edf1; /* 밝은 섹션 베이스 */
   --color-ink: #12161c; /* 본문 텍스트 */
 
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-noto-sans-kr);
   --font-mono: var(--font-geist-mono);
 }
 

@@ -35,24 +35,24 @@ export function Contact({ company }: { company: CompanyInfo }) {
     <Section
       id="contact"
       index="05"
-      tone="navy"
+      tone="light"
       eyebrow="Contact"
       title="오시는 길"
       description="문의 사항이 있으시면 언제든지 연락 주시기 바랍니다."
     >
       <div className="grid gap-5 lg:grid-cols-2">
-        <dl className="border-2 border-white/15">
+        <dl className="border-2 border-ink/10 bg-white">
           {rows.map((row) => (
             <div
               key={row.label}
-              className="flex gap-4 border-b border-white/10 px-6 py-4 last:border-b-0"
+              className="flex gap-4 border-b border-ink/10 px-6 py-4 last:border-b-0"
             >
               <dt className="w-20 shrink-0 font-mono text-xs font-bold uppercase tracking-wider text-orange">
                 {row.label}
               </dt>
-              <dd className="text-sm leading-6 text-white/90">
+              <dd className="text-sm leading-6 text-ink/85">
                 {row.href ? (
-                  <a href={row.href} className="hover:text-amber">
+                  <a href={row.href} className="hover:text-orange">
                     {row.value}
                   </a>
                 ) : (
@@ -63,10 +63,10 @@ export function Contact({ company }: { company: CompanyInfo }) {
           ))}
         </dl>
 
-        <div className="flex flex-col justify-between border-l-4 border-orange bg-graphite p-8 text-white">
+        <div className="flex flex-col justify-between border-l-4 border-orange bg-navy p-8 text-white">
           <div>
             <h3 className="text-2xl font-extrabold">{company.name}</h3>
-            <p className="mt-3 text-sm leading-7 text-white/70">
+            <p className="mt-3 text-sm leading-7 text-white/75">
               {contact.address}
             </p>
           </div>

@@ -1,6 +1,14 @@
+import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 import { accentBg, accentText } from "@/lib/accent";
 import type { BusinessArea } from "@/lib/content/types";
+
+/** 사업영역 key → 대표 이미지 (public/images) */
+const areaImage: Record<string, string> = {
+  "industry-automation": "/images/business-industry.jpg",
+  "building-automation": "/images/business-building.jpg",
+  "datacenter-infra": "/images/business-datacenter.jpg",
+};
 
 export function BusinessAreas({ areas }: { areas: BusinessArea[] }) {
   return (
@@ -15,17 +23,35 @@ export function BusinessAreas({ areas }: { areas: BusinessArea[] }) {
         {areas.map((area, i) => (
           <article
             key={area.key}
-            className="flex flex-col border-2 border-ink/10 bg-white"
+            className="group flex flex-col overflow-hidden border-2 border-ink/10 bg-white"
           >
-            <div className={`px-7 py-6 text-white ${accentBg[area.accent]}`}>
-              <span className="font-mono text-sm font-bold text-white/70">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-1 text-2xl font-extrabold">{area.title}</h3>
-              <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-white/80">
-                {area.titleEn}
-              </p>
+            <div className="relative aspect-[4/3] overflow-hidden">
+              <Image
+                src={areaImage[area.key] ?? "/images/business-industry.jpg"}
+                alt={`${area.title} 현장`}
+                fill
+                sizes="(min-width: 1024px) 33vw, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div
+                aria-hidden="true"
+                className={`absolute inset-x-0 top-0 h-1.5 ${accentBg[area.accent]}`}
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-navy/85 via-navy/20 to-transparent"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                <span className="font-mono text-sm font-bold text-white/75">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-0.5 text-2xl font-extrabold">{area.title}</h3>
+                <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-white/80">
+                  {area.titleEn}
+                </p>
+              </div>
             </div>
+
             <ul className="flex-1 divide-y divide-ink/[0.07] px-7">
               {area.items.map((item) => (
                 <li

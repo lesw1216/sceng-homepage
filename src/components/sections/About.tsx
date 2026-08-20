@@ -39,10 +39,10 @@ export function About({ profile }: { profile: CompanyProfile }) {
         {coreValues.map((value) => (
           <div
             key={value.title}
-            className="border-l-4 border-orange bg-navy p-8 text-white"
+            className="border-2 border-ink/10 border-l-4 border-l-orange bg-concrete p-8"
           >
-            <h3 className="text-xl font-extrabold">{value.title}</h3>
-            <p className="mt-3 text-sm leading-7 text-white/75">
+            <h3 className="text-xl font-extrabold text-navy">{value.title}</h3>
+            <p className="mt-3 text-sm leading-7 text-ink/75">
               {value.description}
             </p>
           </div>

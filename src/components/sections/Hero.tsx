@@ -1,40 +1,45 @@
+import Image from "next/image";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import type { CompanyInfo } from "@/lib/content/types";
 
-const gridPattern = {
-  backgroundImage:
-    "linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)",
-  backgroundSize: "56px 56px",
-};
-
 export function Hero({ company }: { company: CompanyInfo }) {
   return (
-    <section id="top" className="relative overflow-hidden bg-graphite text-white">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.05]"
-        style={gridPattern}
+    <section
+      id="top"
+      className="relative isolate overflow-hidden bg-navy text-white"
+    >
+      <Image
+        src="/images/hero-automation.jpg"
+        alt="로봇 팔이 가동되는 산업 자동화 생산 라인"
+        fill
+        priority
+        sizes="100vw"
+        className="-z-10 object-cover"
       />
-      {/* 우상단 오렌지 글로우 */}
+      {/* 텍스트 가독성용 오버레이 */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-orange/20 blur-3xl"
+        className="absolute inset-0 -z-10 bg-gradient-to-r from-navy via-navy/85 to-navy/30"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-gradient-to-t from-navy/80 to-transparent"
       />
 
       <Container>
-        <div className="relative py-24 sm:py-36">
+        <div className="py-28 sm:py-40">
           <div className="flex items-center gap-3">
             <span className="h-7 w-1.5 bg-orange" aria-hidden="true" />
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-white/60">
+            <span className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-white/70">
               Systems and Controls
             </span>
           </div>
 
-          <h1 className="mt-6 max-w-4xl text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-6xl">
+          <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-[1.15] tracking-tight sm:text-6xl">
             {company.headline}
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">
+          <p className="mt-6 max-w-xl text-lg leading-8 text-white/85">
             {company.name} · {company.tagline}
           </p>
 
@@ -50,9 +55,9 @@ export function Hero({ company }: { company: CompanyInfo }) {
       </Container>
 
       {/* 3대 사업 스트립 */}
-      <div className="relative border-t border-white/10">
+      <div className="relative border-t border-white/15 bg-navy/50 backdrop-blur-sm">
         <Container>
-          <ul className="grid sm:grid-cols-3 sm:divide-x sm:divide-white/10">
+          <ul className="grid sm:grid-cols-3 sm:divide-x sm:divide-white/15">
             {company.mainBusiness.map((item, i) => (
               <li
                 key={item}
