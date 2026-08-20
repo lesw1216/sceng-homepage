@@ -20,6 +20,16 @@
 - 명암·상태(hover/disabled/overlay/border)는 **새 색을 만들지 말고** Tailwind opacity로 파생: `bg-navy/90`, `text-ink/70`, `border-ink/10`, `divide-white/10`.
 - 그라디언트가 필요하면 위 토큰 조합만 사용.
 
+## 브랜드 라인 (BrandLine)
+- 로고 규칙을 선(divider)에 적용: **오렌지 : 네이비 = 2 : 1**, 두 색 경계는 "/" 형태의 사선 간격.
+- 단색 border 대신 주요 구획선(섹션 구분·헤더/푸터 경계·탭/nav active 밑줄·카드 상단 바)에 `components/ui/BrandLine`을 사용한다.
+- 세밀한 내부 1px 구분선(표 행 등)은 `border-ink/10`로 가볍게 유지.
+
+## 레이아웃 / 페이지
+- **멀티페이지**: 메뉴별 라우트(`/about` `/technology` `/business` `/achievements` `/contact`), 실적 상세 `/achievements/[slug]`.
+- 헤더/푸터는 **화이트 배경**, `RootLayout`에서 공통 렌더. 헤더 로고는 `public/images/logo-sce.jpg`.
+- 페이지 상단은 `PageHero`(eyebrow + h1 + BrandLine)로 통일.
+
 ## 인더스트리얼 스타일 원칙 (가시성 우선)
 - **대비를 강하게**: 본문 텍스트는 `text-ink/80` 이상, 제목은 `text-navy`/`text-white`. 연한 회색(`/50` 이하)은 라벨·메타에만.
 - **다크/라이트 섹션 교차**: graphite(Hero) → white(About) → concrete(Tech) → white(Business) → concrete(Achievements) → navy(Contact). `Section`의 `tone` prop 사용.
