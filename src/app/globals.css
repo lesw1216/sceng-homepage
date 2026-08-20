@@ -1,26 +1,30 @@
 @import "tailwindcss";
 
 :root {
+  /* 기본 표면/텍스트는 브랜드 팔레트 기준 (light-first) */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f1a28;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* 브랜드 팔레트 — 유일한 색상 소스. 이 외 색 사용 금지 (see .claude/rules/design-system.md) */
+  --color-navy: #001b3d;
+  --color-navy-700: #0b2e52;
+  --color-orange: #f26c21;
+  --color-steel: #5b7185;
+  --color-mist: #eef2f6;
+  --color-sand: #fceee3;
+  --color-ink: #0f1a28;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
