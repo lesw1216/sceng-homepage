@@ -31,7 +31,7 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
             description="산업 자동화부터 빌딩 자동화, 데이터센터 인프라까지 통합 제어 솔루션을 제공합니다."
           />
 
-          {/* 탭 (헤더 네비와 동일한 형태) */}
+          {/* 안내 문구 → 탭 → 본문 사이 세로 간격은 mt-12로 통일한다. */}
           <div className="mt-12 flex flex-wrap gap-x-8 gap-y-2 border-b border-ink/10" role="tablist" aria-label="사업영역 선택">
             {areas.map((a, index) => {
               const on = a.key === area.key;
@@ -51,7 +51,7 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
                     setActive(areas[nextIndex].key);
                     tabRefs.current[nextIndex]?.focus();
                   }}
-                  className="relative py-4"
+                  className="relative pb-4"
                   role="tab"
                   aria-selected={on}
                   aria-controls="business-panel"
@@ -73,7 +73,11 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
           </div>
 
           {/* 좌측 사진 / 우측 내용 */}
-          <div id="business-panel" role="tabpanel" className="mt-12 grid gap-10 lg:grid-cols-[1.08fr_0.92fr]">
+          <div
+            id="business-panel"
+            role="tabpanel"
+            className="mt-12 grid items-start gap-10 lg:grid-cols-[1.08fr_0.92fr]"
+          >
             <div className="relative aspect-[4/3] overflow-hidden bg-navy lg:aspect-auto lg:min-h-[500px]">
               <Image
                 src={businessAreaImage[area.key]}
@@ -84,21 +88,23 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
               />
             </div>
 
-            <div className="flex flex-col justify-center border-y border-ink/15 py-10 lg:px-8">
+            {/* 2열 설명은 항상 1열 이미지 상단과 같은 높이에서 시작한다(탭 전환 시에도 고정). */}
+            <div className="flex flex-col lg:px-8">
               <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange">
                 {area.titleEn}
               </p>
               <h3 className="mt-3 text-2xl font-bold tracking-tight text-navy">
                 {area.title}
               </h3>
-              <ul className="mt-10 grid gap-x-6 gap-y-4 sm:grid-cols-2">
+              {/* 문장이 임의로 줄바꿈되지 않도록 한 줄 = 한 항목으로 나열한다. */}
+              <ul className="mt-10 grid gap-y-4">
                 {area.items.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2.5 text-sm font-medium leading-relaxed text-ink/85"
+                    className="flex items-start gap-2.5 text-base leading-relaxed text-ink/85"
                   >
                     <svg
-                      className="mt-1 h-4 w-4 shrink-0 text-orange"
+                      className="mt-1.5 h-4 w-4 shrink-0 text-orange"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                       aria-hidden="true"
