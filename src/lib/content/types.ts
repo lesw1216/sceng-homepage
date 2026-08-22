@@ -103,24 +103,42 @@ export interface Metric {
   value: string;
 }
 
-/** 실적 현황 1건 = 게시글 1건 (프로젝트) */
-export interface Achievement extends ContentRecord {
-  /** 실제 실적이 아닌 UI 확인용 레코드 */
+/** 원천 데이터(로컬 파일 또는 백엔드 API)가 제공하는 실적 1건 */
+export interface AchievementSource extends ContentRecord {
+  /** 실제 실적이 아닌 UI 확인용 데모 레코드 */
   isDemo?: boolean;
-  /** 연도 (필터·정렬 키) */
-  year: number;
-  /** 분류(예: "산업 자동화", "빌딩 자동화", "데이터센터") */
+  /** 사업 분야 (businessAreas의 key) */
+  areaKey: string;
+  /** 사업 분야 표시 라벨 */
   category: string;
   /** 대표 사진 (public/images 경로) */
   image: string;
-  /** 고객사 */
+  /** 고객 */
   client: string;
-  /** 발주 */
+  /** 발주처 */
   orderer: string;
   /** 위치 */
   location: string;
-  /** 프로젝트 기간 */
-  period: string;
+  /** 프로젝트 시작일 (YYYY-MM) */
+  startDate: string;
+  /** 프로젝트 종료일 (YYYY-MM) */
+  endDate: string;
+  /** 등록 순서. 시작일·종료일이 모두 같을 때의 정렬 기준 */
+  sequence: number;
   /** 정량 지표 (선택) */
   metrics?: Metric[];
+}
+
+/** 화면에서 소비하는 실적 1건. year·period는 accessor가 파생한다. */
+export interface Achievement extends AchievementSource {
+  /** 시작일 기준 연도 (필터 키) */
+  year: number;
+  /** 표시용 기간 문자열 */
+  period: string;
+}
+
+/** 실적 사업 분야 필터 선택지 */
+export interface AchievementCategory {
+  key: string;
+  label: string;
 }

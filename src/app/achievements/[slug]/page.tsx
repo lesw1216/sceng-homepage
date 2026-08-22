@@ -7,16 +7,12 @@ import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import {
   getAchievementBySlug,
-  getAchievementPreview,
   getAchievements,
 } from "@/lib/content/achievements";
 
 export async function generateStaticParams() {
-  const [items, preview] = await Promise.all([
-    getAchievements(),
-    getAchievementPreview(),
-  ]);
-  return [...items, preview].map((item) => ({ slug: item.slug }));
+  const items = await getAchievements();
+  return items.map((item) => ({ slug: item.slug }));
 }
 
 export async function generateMetadata({
@@ -28,12 +24,12 @@ export async function generateMetadata({
   const item = await getAchievementBySlug(slug);
   if (!item) return {};
   return {
-    title: item.isDemo ? `DEMO | ${item.title}` : item.title,
+    title: item.title,
     description: item.summary,
     alternates: { canonical: `/achievements/${slug}` },
     robots: item.isDemo ? { index: false, follow: false } : undefined,
     openGraph: {
-      title: item.isDemo ? `DEMO | ${item.title}` : item.title,
+      title: item.title,
       description: item.summary,
     },
   };

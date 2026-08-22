@@ -14,7 +14,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const items = await getAchievements();
+  // 데모 레코드는 실제 실적이 아니므로 색인 대상에서 제외한다.
+  const items = (await getAchievements()).filter((item) => !item.isDemo);
   const achievementEntries: MetadataRoute.Sitemap = items.map((item) => ({
     url: `${SITE_URL}/achievements/${item.slug}`,
     lastModified: now,

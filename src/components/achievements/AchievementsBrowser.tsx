@@ -2,57 +2,76 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { BrandLine } from "@/components/ui/BrandLine";
+import { type FormEvent, useMemo, useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import type { Achievement } from "@/lib/content/types";
+import {
+  ALL_FILTER,
+  filterAchievements,
+  getPageItems,
+  getTotalPages,
+} from "@/lib/achievements";
+import type { Achievement, AchievementCategory } from "@/lib/content/types";
 
 interface AchievementsBrowserProps {
   items: Achievement[];
   years: number[];
-  preview: Achievement;
+  categories: AchievementCategory[];
 }
 
 export function AchievementsBrowser({
   items,
   years,
-  preview,
+  categories,
 }: AchievementsBrowserProps) {
-  const [query, setQuery] = useState("");
-  const [year, setYear] = useState<number | "all">("all");
-  const [category, setCategory] = useState("all");
+  const [keywordInput, setKeywordInput] = useState("");
+  // 입력할 때마다가 아니라 검색 실행 시점에만 확정된다(추후 검색 API 요청 시점).
+  const [keyword, setKeyword] = useState("");
+  const [areaKey, setAreaKey] = useState<string>(ALL_FILTER);
+  const [year, setYear] = useState<number | typeof ALL_FILTER>(ALL_FILTER);
+  const [page, setPage] = useState(1);
 
-  const categories = useMemo(
-    () => [...new Set(items.map((item) => item.category))],
-    [items],
+  const filtered = useMemo(
+    () => filterAchievements(items, { keyword, areaKey, year }),
+    [areaKey, items, keyword, year],
   );
-  const filtered = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-    return items.filter((item) => {
-      const searchable = [
-        item.title,
-        item.client,
-        item.orderer,
-        item.location,
-        item.category,
-      ]
-        .join(" ")
-        .toLowerCase();
-      return (
-        (year === "all" || item.year === year) &&
-        (category === "all" || item.category === category) &&
-        (normalizedQuery === "" || searchable.includes(normalizedQuery))
-      );
-    });
-  }, [category, items, query, year]);
 
-  const chipClass = (isActive: boolean) =>
-    `border px-4 py-2 text-sm font-bold transition-colors ${
+  const totalPages = getTotalPages(filtered.length);
+  const currentPage = Math.min(page, totalPages);
+  const pageItems = getPageItems(filtered, currentPage);
+
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setKeyword(keywordInput);
+    setPage(1);
+  };
+
+  const handleAreaChange = (nextAreaKey: string) => {
+    setAreaKey(nextAreaKey);
+    setPage(1);
+  };
+
+  const handleYearChange = (nextYear: number | typeof ALL_FILTER) => {
+    setYear(nextYear);
+    setPage(1);
+  };
+
+  const areaButtonClass = (isActive: boolean) =>
+    `text-base transition-colors ${
       isActive
-        ? "border-navy bg-navy text-white"
-        : "border-ink/15 bg-white text-navy hover:border-orange hover:text-orange"
+        ? "font-semibold text-navy underline underline-offset-8"
+        : "font-medium text-steel hover:text-navy"
     }`;
+
+  const pageButtonClass = (isActive: boolean) =>
+    `grid h-10 min-w-10 place-items-center border px-3 text-base transition-colors ${
+      isActive
+        ? "border-navy font-semibold text-navy"
+        : "border-transparent font-medium text-steel hover:text-navy"
+    }`;
+
+  const stepButtonClass =
+    "grid h-10 w-10 place-items-center border border-ink/15 text-lg text-navy transition-colors hover:border-navy";
 
   return (
     <section id="achievements" className="scroll-mt-24 bg-white">
@@ -61,95 +80,52 @@ export function AchievementsBrowser({
           <SectionHeading
             eyebrow="Track Record"
             title="실적현황"
-            description="검증된 수행 경험은 정확한 자료를 바탕으로 공개합니다."
+            description="수행한 프로젝트를 사업 분야·연도·검색어로 확인하실 수 있습니다."
           />
 
           {items.length === 0 ? (
-            <div className="mt-14 grid overflow-hidden border border-ink/15 lg:grid-cols-[1.2fr_0.8fr]">
-              <div className="relative min-h-[360px] bg-navy p-8 text-white sm:p-12">
-                <span className="text-sm font-bold uppercase tracking-[0.25em] text-amber">
-                  Official Records
-                </span>
-                <p className="mt-8 max-w-lg text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-                  공식 수행 실적 자료를 준비하고 있습니다.
-                </p>
-                <p className="mt-6 max-w-xl leading-relaxed text-white/75">
-                  고객사와 프로젝트 정보를 검토한 뒤 정확한 내용으로 업데이트하겠습니다.
-                  자세한 수행 역량은 보유기술과 사업영역에서 확인하실 수 있습니다.
-                </p>
-                <div className="absolute inset-x-0 bottom-0">
-                  <BrandLine />
-                </div>
-              </div>
-
-              <Link
-                href={`/achievements/${preview.slug}`}
-                className="group flex flex-col bg-white p-8 transition-colors hover:bg-concrete/50 sm:p-12"
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <span className="bg-orange px-3 py-1 text-sm font-bold tracking-wider text-white">
-                    DEMO
-                  </span>
-                  <span className="text-sm text-steel">UI PREVIEW</span>
-                </div>
-                <div className="relative mt-8 aspect-[16/9] overflow-hidden">
-                  <Image
-                    src={preview.image}
-                    alt=""
-                    fill
-                    sizes="(min-width: 1024px) 38vw, 100vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <h3 className="mt-6 text-xl font-semibold leading-snug text-navy">
-                  실적 상세 디자인 미리보기
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink/70">
-                  실제 수행 실적이 아닌 상세 페이지 구성 확인용 데모입니다.
-                </p>
-                <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-orange">
-                  상세 화면 확인 <span aria-hidden="true">↗</span>
-                </span>
-              </Link>
-            </div>
+            <p className="mt-12 border border-dashed border-steel/50 p-14 text-center text-lg font-semibold text-navy">
+              아직 등록된 실적이 없습니다. 공식 실적 자료를 정리해 순차적으로 공개할
+              예정입니다.
+            </p>
           ) : (
             <>
-              <div className="mt-12 grid gap-5 border-y border-ink/10 py-6 lg:grid-cols-[1fr_auto]">
-                <input
-                  type="search"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="프로젝트명 · 고객사 · 지역 검색"
-                  aria-label="실적 검색"
-                  className="w-full border border-ink/20 bg-white px-4 py-3 text-sm text-ink outline-none focus:border-orange lg:max-w-md"
-                />
-                <div className="flex flex-wrap gap-2">
+              {/* 왼쪽: 사업 분야 + 연도 / 오른쪽: 검색 */}
+              <div className="mt-12 flex flex-wrap items-center justify-between gap-x-10 gap-y-5 border-y border-ink/10 py-6">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
                   <button
                     type="button"
-                    onClick={() => setCategory("all")}
-                    className={chipClass(category === "all")}
+                    onClick={() => handleAreaChange(ALL_FILTER)}
+                    aria-pressed={areaKey === ALL_FILTER}
+                    className={areaButtonClass(areaKey === ALL_FILTER)}
                   >
-                    전체 분야
+                    전체
                   </button>
-                  {categories.map((itemCategory) => (
+                  {categories.map((category) => (
                     <button
-                      key={itemCategory}
+                      key={category.key}
                       type="button"
-                      onClick={() => setCategory(itemCategory)}
-                      className={chipClass(category === itemCategory)}
+                      onClick={() => handleAreaChange(category.key)}
+                      aria-pressed={areaKey === category.key}
+                      className={areaButtonClass(areaKey === category.key)}
                     >
-                      {itemCategory}
+                      {category.label}
                     </button>
                   ))}
+
                   <select
                     value={year}
                     onChange={(event) =>
-                      setYear(event.target.value === "all" ? "all" : Number(event.target.value))
+                      handleYearChange(
+                        event.target.value === ALL_FILTER
+                          ? ALL_FILTER
+                          : Number(event.target.value),
+                      )
                     }
                     aria-label="실적 연도"
-                    className="border border-ink/20 bg-white px-4 py-2 text-sm font-bold text-navy"
+                    className="h-11 border border-ink/20 bg-white px-3 text-base font-medium text-navy"
                   >
-                    <option value="all">전체 연도</option>
+                    <option value={ALL_FILTER}>전체 연도</option>
                     {years.map((itemYear) => (
                       <option key={itemYear} value={itemYear}>
                         {itemYear}
@@ -157,43 +133,163 @@ export function AchievementsBrowser({
                     ))}
                   </select>
                 </div>
+
+                <form
+                  onSubmit={handleSearch}
+                  role="search"
+                  className="flex h-11 w-full items-center border border-ink/20 lg:w-[420px]"
+                >
+                  <input
+                    type="search"
+                    value={keywordInput}
+                    onChange={(event) => setKeywordInput(event.target.value)}
+                    placeholder="프로젝트 이름, 고객사, 발주처, 위치를 입력하세요."
+                    aria-label="실적 검색"
+                    className="h-full w-full bg-white px-4 text-base text-ink outline-none"
+                  />
+                  <button
+                    type="submit"
+                    aria-label="검색"
+                    className="grid h-full w-12 shrink-0 place-items-center text-navy transition-colors hover:text-orange"
+                  >
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M21 21l-4.3-4.3M17 10.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z"
+                      />
+                    </svg>
+                  </button>
+                </form>
               </div>
 
               {filtered.length === 0 ? (
-                <div className="mt-8 border border-dashed border-steel/50 p-14 text-center">
-                  <p className="text-lg font-bold text-navy">검색 결과가 없습니다.</p>
-                </div>
+                <p className="mt-10 border border-dashed border-steel/50 p-14 text-center text-lg font-semibold text-navy">
+                  선택하신 조건에 해당하는 실적이 없습니다. 검색어나 필터를 변경해
+                  주시기 바랍니다.
+                </p>
               ) : (
-                <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {filtered.map((item) => (
-                    <Link
-                      key={item.slug}
-                      href={`/achievements/${item.slug}`}
-                      className="group border border-ink/15 bg-white transition-colors hover:border-orange"
+                <>
+                  <div className="mt-10 flex items-start gap-3 sm:gap-5">
+                    {/* 리스트 좌우 페이지 이동 (첫/마지막 페이지에서는 표시하지 않는다) */}
+                    <div className="w-10 shrink-0 pt-24">
+                      {currentPage > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => setPage(currentPage - 1)}
+                          aria-label="이전 페이지"
+                          className={stepButtonClass}
+                        >
+                          &lt;
+                        </button>
+                      )}
+                    </div>
+
+                    <ul className="grid flex-1 grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+                      {pageItems.map((item) => (
+                        <li key={item.slug}>
+                          <Link
+                            href={`/achievements/${item.slug}`}
+                            className="group flex h-full flex-col"
+                          >
+                            <div className="relative aspect-[4/3] overflow-hidden bg-concrete">
+                              <Image
+                                src={item.image}
+                                alt={`${item.title} 현장`}
+                                fill
+                                sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                              />
+                            </div>
+                            <p className="mt-4 text-sm font-semibold text-orange">
+                              {item.category}
+                            </p>
+                            <h3 className="mt-1 text-lg font-semibold leading-snug text-navy group-hover:text-orange">
+                              {item.title}
+                            </h3>
+                            <dl className="mt-3 space-y-1 text-sm leading-relaxed text-ink/75">
+                              <div className="flex gap-2">
+                                <dt className="shrink-0 text-steel">고객</dt>
+                                <dd>{item.client}</dd>
+                              </div>
+                              <div className="flex gap-2">
+                                <dt className="shrink-0 text-steel">발주처</dt>
+                                <dd>{item.orderer}</dd>
+                              </div>
+                              <div className="flex gap-2">
+                                <dt className="shrink-0 text-steel">기간</dt>
+                                <dd>{item.period}</dd>
+                              </div>
+                              <div className="flex gap-2">
+                                <dt className="shrink-0 text-steel">위치</dt>
+                                <dd>{item.location}</dd>
+                              </div>
+                            </dl>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="w-10 shrink-0 pt-24">
+                      {currentPage < totalPages && (
+                        <button
+                          type="button"
+                          onClick={() => setPage(currentPage + 1)}
+                          aria-label="다음 페이지"
+                          className={stepButtonClass}
+                        >
+                          &gt;
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {totalPages > 1 && (
+                    <nav
+                      className="mt-14 flex items-center justify-center gap-2"
+                      aria-label="실적 페이지"
                     >
-                      <div className="relative aspect-[16/10] overflow-hidden">
-                        <Image
-                          src={item.image}
-                          alt={`${item.title} 현장`}
-                          fill
-                          sizes="(min-width: 1024px) 33vw, 50vw"
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      </div>
-                      <div className="p-6">
-                        <span className="text-sm font-bold text-orange">
-                          {item.year} · {item.category}
-                        </span>
-                        <h3 className="mt-2 text-lg font-semibold text-navy">
-                          {item.title}
-                        </h3>
-                        <p className="mt-4 text-sm text-ink/70">
-                          {item.client} · {item.location}
-                        </p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                      <button
+                        type="button"
+                        onClick={() => setPage(1)}
+                        disabled={currentPage === 1}
+                        aria-label="맨 앞 페이지"
+                        className={`${stepButtonClass} disabled:border-ink/10 disabled:text-steel/50`}
+                      >
+                        &laquo;
+                      </button>
+                      {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                        (pageNumber) => (
+                          <button
+                            key={pageNumber}
+                            type="button"
+                            onClick={() => setPage(pageNumber)}
+                            aria-current={pageNumber === currentPage}
+                            className={pageButtonClass(pageNumber === currentPage)}
+                          >
+                            {pageNumber}
+                          </button>
+                        ),
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setPage(totalPages)}
+                        disabled={currentPage === totalPages}
+                        aria-label="맨 뒤 페이지"
+                        className={`${stepButtonClass} disabled:border-ink/10 disabled:text-steel/50`}
+                      >
+                        &raquo;
+                      </button>
+                    </nav>
+                  )}
+                </>
               )}
             </>
           )}
