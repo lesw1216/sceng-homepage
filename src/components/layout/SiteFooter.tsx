@@ -27,8 +27,8 @@ export function SiteFooter({ company }: SiteFooterProps) {
                 className="object-contain object-left"
               />
             </div>
-            <p className="mt-4 max-w-md text-sm leading-6">{company.tagline}</p>
-            <address className="mt-4 space-y-1 text-sm not-italic leading-6 text-ink/70">
+            <p className="mt-4 max-w-md text-sm leading-relaxed">{company.tagline}</p>
+            <address className="mt-4 space-y-1 text-sm not-italic leading-relaxed text-ink/70">
               <p>{contact.address}</p>
               <p>
                 대표전화 {contact.phone} · 이메일{" "}

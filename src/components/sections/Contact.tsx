@@ -49,10 +49,10 @@ export function Contact({ company }: { company: CompanyInfo }) {
                   key={row.label}
                   className="grid gap-2 border-b border-ink/10 py-5 last:border-b-0 sm:grid-cols-[120px_1fr]"
                 >
-                  <dt className="w-20 shrink-0 font-mono text-xs font-bold uppercase tracking-wider text-orange">
+                  <dt className="w-20 shrink-0 text-sm font-bold uppercase tracking-wider text-orange">
                     {row.label}
                   </dt>
-                  <dd className="text-sm leading-6 text-ink/85">
+                  <dd className="text-sm leading-relaxed text-ink/85">
                     {row.href ? (
                       <a href={row.href} className="hover:text-orange">
                         {row.value}
@@ -69,10 +69,10 @@ export function Contact({ company }: { company: CompanyInfo }) {
             <div className="relative flex flex-col justify-between overflow-hidden bg-navy p-8 text-white sm:p-10">
               <div>
                 <span className="block h-6 w-1.5 bg-orange" aria-hidden="true" />
-                <h3 className="mt-5 text-3xl font-extrabold text-white">
+                <h3 className="mt-5 text-3xl font-bold text-white">
                   {company.name}
                 </h3>
-                <p className="mt-4 text-sm leading-7 text-white/75">
+                <p className="mt-4 text-sm leading-relaxed text-white/75">
                   {contact.address}
                 </p>
               </div>

@@ -65,7 +65,7 @@ export default async function AchievementDetailPage({
       <section className="bg-white">
         <Container>
           {item.isDemo && (
-            <div className="mt-10 border border-orange bg-concrete/40 px-5 py-4 text-sm font-bold leading-6 text-navy">
+            <div className="mt-10 border border-orange bg-concrete/40 px-5 py-4 text-sm font-bold leading-relaxed text-navy">
               이 페이지는 실제 수행 실적이 아닌 상세 화면 디자인 확인용 데모입니다.
             </div>
           )}
@@ -102,17 +102,17 @@ export default async function AchievementDetailPage({
                   실적현황 목록
                 </Link>
               </div>
-              <p className="mt-10 text-xl font-bold leading-9 text-navy">
+              <p className="mt-10 text-xl font-bold leading-relaxed text-navy">
                 {item.summary}
               </p>
-              <p className="mt-6 text-base leading-8 text-ink/80">{item.body}</p>
+              <p className="mt-6 text-base leading-relaxed text-ink/80">{item.body}</p>
             </div>
 
             <aside>
               <div className="sticky top-28 border border-ink/15">
                 <div className="p-6">
                   <BrandLine className="mb-5" />
-                  <h2 className="font-mono text-sm font-bold uppercase tracking-wider text-orange">
+                  <h2 className="text-sm font-bold uppercase tracking-wider text-orange">
                     Project Info
                   </h2>
                 </div>
@@ -125,7 +125,7 @@ export default async function AchievementDetailPage({
                       <dt className="w-24 shrink-0 text-sm font-bold text-steel">
                         {row.label}
                       </dt>
-                      <dd className="text-sm leading-6 text-ink/85">
+                      <dd className="text-sm leading-relaxed text-ink/85">
                         {row.value}
                       </dd>
                     </div>

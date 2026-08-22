@@ -29,14 +29,14 @@ export function TechSkills({ phases }: { phases: TechPhase[] }) {
               {phases.map((phase, i) => (
                 <li key={phase.title} className="flex flex-col">
                   <div className="relative flex items-center gap-3 bg-white pr-3">
-                    <span className="grid h-11 w-11 shrink-0 place-items-center bg-orange font-mono text-base font-extrabold text-white">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center bg-orange text-base font-bold text-white">
                       {i + 1}
                     </span>
                     <div>
-                      <h3 className="text-lg font-extrabold leading-tight text-navy">
+                      <h3 className="text-xl font-semibold leading-tight text-navy">
                         {phase.title}
                       </h3>
-                      <p className="font-mono text-[11px] uppercase tracking-wider text-steel">
+                      <p className="text-sm uppercase tracking-wider text-steel">
                         {phase.titleEn}
                       </p>
                     </div>
@@ -54,7 +54,7 @@ export function TechSkills({ phases }: { phases: TechPhase[] }) {
                           {group.items.map((item) => (
                             <li
                               key={item}
-                              className="flex gap-2 text-sm leading-6 text-ink/80"
+                              className="flex gap-2 text-sm leading-relaxed text-ink/80"
                             >
                               <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-orange" />
                               {item}

@@ -25,7 +25,7 @@ export function About({ profile }: { profile: CompanyProfile }) {
           {/* CEO Message */}
           <div className="mt-16 grid gap-10 lg:grid-cols-[0.8fr_1.4fr] lg:gap-20">
             <div className="border-t-4 border-orange pt-8">
-              <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-orange">
+              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange">
                 CEO Message
               </p>
               <div className="relative mt-8 h-32 w-64">
@@ -37,17 +37,17 @@ export function About({ profile }: { profile: CompanyProfile }) {
                   className="object-contain object-left"
                 />
               </div>
-              <p className="mt-8 font-mono text-xs font-bold uppercase tracking-wider text-steel">
+              <p className="mt-8 text-sm font-bold uppercase tracking-wider text-steel">
                 {info.name} 대표이사 {info.ceo}
               </p>
             </div>
             <div>
-              <p className="text-3xl font-extrabold leading-tight tracking-[-0.03em] text-navy sm:text-4xl">
+              <p className="text-3xl font-bold leading-tight tracking-[-0.03em] text-navy sm:text-4xl">
                 미래를 제어하는 기술,
                 <br />
                 신뢰를 이어가는 기업
               </p>
-              <div className="mt-8 space-y-5 text-base leading-8 text-ink/80">
+              <div className="mt-8 space-y-5 text-base leading-relaxed text-ink/80">
                 {ceoMessage.map((paragraph) => (
                   <p key={paragraph.slice(0, 16)}>{paragraph}</p>
                 ))}
@@ -59,24 +59,24 @@ export function About({ profile }: { profile: CompanyProfile }) {
           <div className="mt-24 grid gap-12 border-t border-ink/10 pt-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
             {/* 회사 개요 */}
             <div>
-              <h3 className="text-2xl font-extrabold tracking-tight text-navy">회사 개요</h3>
+              <h3 className="text-2xl font-bold tracking-tight text-navy">회사 개요</h3>
               <dl className="mt-7 border-y border-ink/15">
                 {overview.map((row) => (
                   <div
                     key={row.label}
                     className="grid gap-2 border-b border-ink/10 py-5 last:border-b-0 sm:grid-cols-[120px_1fr]"
                   >
-                    <dt className="font-mono text-xs font-bold uppercase tracking-wider text-orange">
+                    <dt className="text-sm font-bold uppercase tracking-wider text-orange">
                       {row.label}
                     </dt>
-                    <dd className="text-sm font-medium leading-6 text-ink/85">
+                    <dd className="text-sm font-medium leading-relaxed text-ink/85">
                       {row.value}
                     </dd>
                   </div>
                 ))}
               </dl>
 
-              <h4 className="mt-10 flex items-center gap-3 text-lg font-extrabold text-navy">
+              <h4 className="mt-10 flex items-center gap-3 text-lg font-bold text-navy">
                 <span className="h-5 w-1 bg-orange" aria-hidden="true" />
                 주요 생산품목
               </h4>
@@ -87,7 +87,7 @@ export function About({ profile }: { profile: CompanyProfile }) {
                     className="border border-ink/15 bg-concrete/30 p-5"
                   >
                     {group.label && (
-                      <p className="mb-2.5 font-mono text-xs font-bold uppercase tracking-wider text-orange">
+                      <p className="mb-2.5 text-sm font-bold uppercase tracking-wider text-orange">
                         {group.label}
                       </p>
                     )}
@@ -95,7 +95,7 @@ export function About({ profile }: { profile: CompanyProfile }) {
                       {group.items.map((item) => (
                         <span
                           key={item}
-                          className="border border-ink/10 px-2.5 py-1 text-xs font-medium text-ink/80"
+                          className="border border-ink/10 px-2.5 py-1 text-sm font-medium text-ink/80"
                         >
                           {item}
                         </span>
@@ -108,25 +108,25 @@ export function About({ profile }: { profile: CompanyProfile }) {
 
             {/* 핵심 가치 */}
             <div>
-              <h3 className="text-2xl font-extrabold tracking-tight text-navy">핵심 가치</h3>
+              <h3 className="text-2xl font-bold tracking-tight text-navy">핵심 가치</h3>
               <div className="mt-7 grid gap-5">
                 {coreValues.map((value, i) => (
                   <div
                     key={value.title}
                     className="relative overflow-hidden border border-ink/15 p-8"
                   >
-                    <span className="absolute right-3 top-0 font-mono text-8xl font-extrabold leading-none text-concrete" aria-hidden="true">
+                    <span className="absolute right-3 top-0 text-8xl font-bold leading-none text-concrete" aria-hidden="true">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div className="relative flex items-baseline gap-3">
-                      <span className="font-mono text-2xl font-extrabold text-orange">
+                      <span className="text-2xl font-bold text-orange">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <h4 className="text-xl font-extrabold text-navy">
+                      <h4 className="text-xl font-semibold text-navy">
                         {value.title}
                       </h4>
                     </div>
-                    <p className="relative mt-4 text-base leading-8 text-ink/75">
+                    <p className="relative mt-4 text-base leading-relaxed text-ink/75">
                       {value.description}
                     </p>
                   </div>

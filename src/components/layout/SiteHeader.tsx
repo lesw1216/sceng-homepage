@@ -57,7 +57,7 @@ export function SiteHeader() {
                   <li key={item.id} className="relative py-2">
                     <Link
                       href={item.href}
-                      className={`text-sm font-bold transition-colors ${
+                      className={`text-base font-semibold transition-colors ${
                         on ? "text-orange" : "text-navy hover:text-orange"
                       }`}
                     >
@@ -121,7 +121,7 @@ export function SiteHeader() {
                   <Link
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="block py-3 text-sm font-bold text-navy"
+                    className="block py-3 text-base font-semibold text-navy"
                   >
                     {item.label}
                   </Link>

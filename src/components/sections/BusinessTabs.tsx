@@ -58,7 +58,7 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
                   tabIndex={on ? 0 : -1}
                 >
                   <span
-                    className={`text-base font-bold transition-colors ${
+                    className={`text-base font-semibold transition-colors ${
                       on ? "text-orange" : "text-navy hover:text-orange"
                     }`}
                   >
@@ -85,17 +85,17 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
             </div>
 
             <div className="flex flex-col justify-center border-y border-ink/15 py-10 lg:px-8">
-              <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-orange">
+              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange">
                 {area.titleEn}
               </p>
-              <h3 className="mt-3 text-4xl font-extrabold tracking-tight text-navy sm:text-5xl">
+              <h3 className="mt-3 text-2xl font-bold tracking-tight text-navy">
                 {area.title}
               </h3>
               <ul className="mt-10 grid gap-x-6 gap-y-4 sm:grid-cols-2">
                 {area.items.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2.5 text-sm font-medium leading-6 text-ink/85"
+                    className="flex items-start gap-2.5 text-sm font-medium leading-relaxed text-ink/85"
                   >
                     <svg
                       className="mt-1 h-4 w-4 shrink-0 text-orange"

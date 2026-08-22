@@ -71,15 +71,15 @@ export function HeroCarousel({ company }: HeroCarouselProps) {
       <Container className="relative z-10 flex min-h-[680px] items-center py-24 sm:min-h-[760px]">
         <div className="max-w-4xl pt-12 text-white">
           <div className="flex items-center gap-4">
-            <span className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-amber">
+            <span className="text-sm font-semibold uppercase tracking-[0.3em] text-amber">
               Systems and Controls
             </span>
             <span className="h-px w-12 bg-orange" aria-hidden="true" />
           </div>
-          <h1 className="mt-7 max-w-3xl text-5xl font-extrabold leading-[1.12] tracking-[-0.05em] sm:text-6xl lg:text-7xl">
+          <h1 className="mt-7 max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
             {company.headline}
           </h1>
-          <p className="mt-7 max-w-2xl text-lg font-medium leading-8 text-white/80 sm:text-xl">
+          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white/85 sm:text-xl">
             {company.tagline}. 분석과 설계부터 제작, 설치와 시운전까지 하나의 흐름으로 완성합니다.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
@@ -98,7 +98,7 @@ export function HeroCarousel({ company }: HeroCarouselProps) {
           <div className="hidden gap-8 text-white/80 md:flex">
             {company.mainBusiness.map((business, index) => (
               <div key={business} className="flex items-center gap-3">
-                <span className="font-mono text-xs text-amber">
+                <span className="text-sm text-amber">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="text-sm font-bold">{business}</span>

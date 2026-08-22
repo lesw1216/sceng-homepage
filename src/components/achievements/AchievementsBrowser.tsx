@@ -67,13 +67,13 @@ export function AchievementsBrowser({
           {items.length === 0 ? (
             <div className="mt-14 grid overflow-hidden border border-ink/15 lg:grid-cols-[1.2fr_0.8fr]">
               <div className="relative min-h-[360px] bg-navy p-8 text-white sm:p-12">
-                <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-amber">
+                <span className="text-sm font-bold uppercase tracking-[0.25em] text-amber">
                   Official Records
                 </span>
-                <p className="mt-8 max-w-lg text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                <p className="mt-8 max-w-lg text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
                   공식 수행 실적 자료를 준비하고 있습니다.
                 </p>
-                <p className="mt-6 max-w-xl leading-7 text-white/75">
+                <p className="mt-6 max-w-xl leading-relaxed text-white/75">
                   고객사와 프로젝트 정보를 검토한 뒤 정확한 내용으로 업데이트하겠습니다.
                   자세한 수행 역량은 보유기술과 사업영역에서 확인하실 수 있습니다.
                 </p>
@@ -87,10 +87,10 @@ export function AchievementsBrowser({
                 className="group flex flex-col bg-white p-8 transition-colors hover:bg-concrete/50 sm:p-12"
               >
                 <div className="flex items-center justify-between gap-4">
-                  <span className="bg-orange px-3 py-1 font-mono text-xs font-bold tracking-wider text-white">
+                  <span className="bg-orange px-3 py-1 text-sm font-bold tracking-wider text-white">
                     DEMO
                   </span>
-                  <span className="font-mono text-xs text-steel">UI PREVIEW</span>
+                  <span className="text-sm text-steel">UI PREVIEW</span>
                 </div>
                 <div className="relative mt-8 aspect-[16/9] overflow-hidden">
                   <Image
@@ -101,10 +101,10 @@ export function AchievementsBrowser({
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-                <h3 className="mt-6 text-2xl font-extrabold leading-snug text-navy">
+                <h3 className="mt-6 text-xl font-semibold leading-snug text-navy">
                   실적 상세 디자인 미리보기
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-ink/70">
+                <p className="mt-3 text-sm leading-relaxed text-ink/70">
                   실제 수행 실적이 아닌 상세 페이지 구성 확인용 데모입니다.
                 </p>
                 <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-orange">
@@ -181,10 +181,10 @@ export function AchievementsBrowser({
                         />
                       </div>
                       <div className="p-6">
-                        <span className="font-mono text-xs font-bold text-orange">
+                        <span className="text-sm font-bold text-orange">
                           {item.year} · {item.category}
                         </span>
-                        <h3 className="mt-2 text-xl font-extrabold text-navy">
+                        <h3 className="mt-2 text-lg font-semibold text-navy">
                           {item.title}
                         </h3>
                         <p className="mt-4 text-sm text-ink/70">

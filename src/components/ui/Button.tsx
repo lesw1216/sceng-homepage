@@ -33,7 +33,7 @@ export function ButtonLink({
     <a
       href={href}
       {...externalProps}
-      className={`inline-flex h-12 items-center justify-center gap-2 rounded-sm px-6 text-sm font-bold tracking-wide transition-colors ${variantClass[variant]} ${className}`}
+      className={`inline-flex h-12 items-center justify-center gap-2 rounded-sm px-6 text-base font-semibold transition-colors ${variantClass[variant]} ${className}`}
     >
       {children}
     </a>

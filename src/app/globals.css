@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* 라이트 인더스트리얼: 밝은 베이스 + 진한 텍스트 (가시성 우선) */
+  /* 라이트 베이스 + 진한 텍스트 (가시성 우선) */
   --background: #ffffff;
   --foreground: #12161c;
 }
@@ -10,29 +10,42 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* 브랜드 팔레트 (라이트 인더스트리얼) — 유일한 색상 소스.
+  /* 브랜드 CI 2색 + 보조색 — 유일한 색상 소스.
      이 외 색 사용 금지 (see .claude/rules/design-system.md) */
-  --color-navy: #001b3d; /* 브랜드 primary, 다크 섹션 */
-  --color-navy-700: #0a2e52; /* navy 위 계층 */
-  --color-graphite: #14181f; /* 산업용 다크 표면(헤더/교차 섹션) */
-  --color-orange: #f26c21; /* 브랜드 accent, CTA */
-  --color-amber: #f5a623; /* sub accent, 수치·하이라이트 */
+  --color-navy: #242145; /* CI navy. 제목·본문 강조·활성 필터 */
+  --color-navy-700: #35315f; /* navy 위 계층·hover */
+  --color-graphite: #14181f; /* 산업용 다크 표면 */
+  --color-orange: #ed512c; /* CI orange. 활성 상태·강조 */
+  --color-amber: #f5a623; /* sub accent */
   --color-steel: #64748b; /* muted 텍스트, 라인 */
-  --color-concrete: #e9edf1; /* 밝은 섹션 베이스 */
+  --color-concrete: #e9edf1; /* 옅은 회색 면 */
   --color-ink: #12161c; /* 본문 텍스트 */
 
-  --font-sans: var(--font-noto-sans-kr);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-pretendard);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  /* 전역 기본 Typography: 16px / 400 / 1.6 (see 요구사항 00-global) */
+  font-family: var(--font-sans), "Apple SD Gothic Neo", Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* 클릭 가능한 요소에는 항상 손가락 포인터를 노출한다. */
+a[href],
+button:not(:disabled),
+select,
+summary,
+[role="tab"],
+[role="button"] {
+  cursor: pointer;
 }
 
 ::selection {

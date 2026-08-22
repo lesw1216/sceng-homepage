@@ -1,22 +1,17 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Noto_Sans_KR } from "next/font/google";
+import localFont from "next/font/local";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { getCompanyInfo } from "@/lib/content/company";
 import { SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-// 본문 기본 서체: Noto Sans KR (self-host, 방문자 전원 동일 적용)
-const notoSansKr = Noto_Sans_KR({
-  variable: "--font-noto-sans-kr",
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "800"],
-});
-
-// 넘버·영문 라벨용 모노 (인더스트리얼 라벨)
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// 전역 단일 서체: Pretendard Variable (로컬 self-host, 400~700을 한 파일로 커버)
+const pretendard = localFont({
+  src: "../fonts/PretendardVariable.woff2",
+  variable: "--font-pretendard",
+  weight: "400 700",
+  display: "swap",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -66,7 +61,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ko"
-      className={`${notoSansKr.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${pretendard.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <SiteHeader />

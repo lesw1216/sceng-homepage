@@ -14,16 +14,16 @@ export function PageHero({ eyebrow, title, description }: PageHeroProps) {
       <Container>
         <div className="py-20 sm:py-28">
           <div className="flex items-center gap-4">
-            <span className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-orange">
+            <span className="text-sm font-semibold uppercase tracking-[0.28em] text-orange">
               {eyebrow}
             </span>
             <span className="h-px w-12 bg-orange" aria-hidden="true" />
           </div>
-          <h1 className="mt-5 max-w-4xl text-4xl font-extrabold tracking-[-0.04em] text-navy sm:text-6xl">
+          <h1 className="mt-5 max-w-4xl text-3xl font-bold leading-tight tracking-tight text-navy sm:text-4xl">
             {title}
           </h1>
           {description && (
-            <p className="mt-4 max-w-3xl text-lg leading-8 text-ink/70">
+            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-ink/70">
               {description}
             </p>
           )}
