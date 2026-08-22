@@ -28,10 +28,14 @@ export function SiteFooter({ company }: SiteFooterProps) {
               />
             </div>
             <p className="mt-4 max-w-md text-sm leading-relaxed">{company.tagline}</p>
+            {/* 회사 기본 기업정보 (Contact와 일부 중복 허용) */}
             <address className="mt-4 space-y-1 text-sm not-italic leading-relaxed text-ink/70">
               <p>{contact.address}</p>
+              <p>대표 {company.ceo}</p>
+              <p>사업자등록번호 {company.businessNumber}</p>
+              <p>대표전화 {contact.phone}</p>
               <p>
-                대표전화 {contact.phone} · 이메일{" "}
+                이메일{" "}
                 <a
                   href={`mailto:${contact.email}`}
                   className="text-navy hover:text-orange"

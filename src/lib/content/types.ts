@@ -41,6 +41,8 @@ export interface CompanyInfo {
   /** 로고/약칭 */
   shortName: string;
   ceo: string;
+  /** 사업자등록번호 */
+  businessNumber: string;
   /** 대표 슬로건 */
   headline: string;
   /** 보조 태그라인 */
