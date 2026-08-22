@@ -15,7 +15,7 @@ const variantClass: Record<ButtonVariant, string> = {
   primary: "bg-orange text-white hover:bg-orange/90",
   secondary: "bg-navy text-white hover:bg-navy-700",
   outline: "border-2 border-navy text-navy hover:bg-navy hover:text-white",
-  ghost: "border-2 border-white/40 text-white hover:bg-white/10",
+  ghost: "border-2 border-white bg-white/10 text-white hover:bg-white hover:text-navy",
 };
 
 /** 링크형 버튼. 각진 형태 + 굵은 라벨로 인더스트리얼 톤. 색은 팔레트 토큰만. */
