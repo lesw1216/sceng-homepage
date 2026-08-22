@@ -1,5 +1,6 @@
 import {
   ceoMessage,
+  ceoSignature,
   companyInfo,
   coreValues,
   productGroups,
@@ -18,6 +19,7 @@ export async function getCompanyProfile(): Promise<CompanyProfile> {
   return {
     info: companyInfo,
     ceoMessage,
+    ceoSignature,
     coreValues,
     productGroups,
   };

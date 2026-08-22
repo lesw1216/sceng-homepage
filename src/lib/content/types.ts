@@ -68,6 +68,8 @@ export interface CompanyProfile {
   info: CompanyInfo;
   /** CEO 인사말 문단 */
   ceoMessage: string[];
+  /** 인사말 말미 서명 문구 */
+  ceoSignature: string;
   coreValues: CoreValue[];
   /** 주요 생산품목 */
   productGroups: LabeledList[];

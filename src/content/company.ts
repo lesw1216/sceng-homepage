@@ -10,7 +10,7 @@ import type {
  */
 export const companyInfo: CompanyInfo = {
   name: "에스씨엔지니어링(주)",
-  nameEn: "SCEngineering",
+  nameEn: "SC ENGINEERING Co., Ltd",
   shortName: "SCE",
   ceo: "이구호",
   headline: "스마트 공간과 최첨단 인프라를 위한 자동화 솔루션",
@@ -32,11 +32,14 @@ export const companyInfo: CompanyInfo = {
 };
 
 export const ceoMessage: string[] = [
-  "안녕하십니까, 에스씨엔지니어링 대표 이구호입니다.",
+  "안녕하십니까.",
   "저희 에스씨엔지니어링은 시스템 및 제어(Systems and Controls)라는 사명 아래, 산업 및 빌딩 자동화 분야에서 오랜 시간 쌓아온 풍부한 실무 경험과 엔지니어링 노하우를 바탕으로 출범하였습니다.",
   "현대 비즈니스 환경에서 자동화와 효율적인 인프라 관리는 기업의 생존과 직결되는 핵심 가치입니다. 에스씨엔지니어링은 단순한 시스템 구축을 넘어, 고객사의 생산성 향상, 에너지 비용 절감, 그리고 무중단 안전성을 보장하는 최적의 통합 제어 솔루션을 제공합니다.",
   "오랜 현장에서 검증된 기술력과 정직함을 무기로, 고객사의 자산가치를 극대화하는 가장 든든한 기술 파트너가 될 것을 약속드리며, 끊임없는 도전과 혁신으로 보답하겠습니다.",
 ];
+
+/** 회사 소개 본문 말미 서명 문구 */
+export const ceoSignature = "에스씨엔지니어링 주식회사 임직원 일동";
 
 export const coreValues: CoreValue[] = [
   {
