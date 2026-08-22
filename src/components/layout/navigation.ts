@@ -6,6 +6,9 @@ export interface NavItem {
   label: string;
 }
 
+/** Hero(메인 최상단) 섹션 id. nav 항목은 아니지만 스크롤 스파이 기준점으로 쓴다. */
+export const HERO_SECTION_ID = "top";
+
 /** 단일 페이지 앵커 네비게이션 (헤더·푸터 공용) */
 export const NAV_ITEMS: NavItem[] = [
   { href: "/#about", id: "about", label: "회사소개" },

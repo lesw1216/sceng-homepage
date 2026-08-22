@@ -2,27 +2,37 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { type MouseEvent, useEffect, useState } from "react";
 import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
-import { NAV_ITEMS } from "./navigation";
+import { HERO_SECTION_ID, NAV_ITEMS } from "./navigation";
+
+/** 스크롤 스파이 대상. Hero(top)는 nav 항목이 아니지만 "활성 없음"을 판정하는 데 필요하다. */
+const SPY_IDS = [HERO_SECTION_ID, ...NAV_ITEMS.map((item) => item.id)];
 
 export function SiteHeader() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("");
 
-  // 단일 페이지 스크롤 스파이 (홈에 섹션이 있을 때만 동작)
+  // 단일 페이지 스크롤 스파이 (클릭 이동·수동 스크롤 모두 현재 섹션을 반영)
   useEffect(() => {
-    const sections = NAV_ITEMS.map((item) =>
-      document.getElementById(item.id),
-    ).filter((el): el is HTMLElement => el !== null);
+    const sections = SPY_IDS.map((id) => document.getElementById(id)).filter(
+      (element): element is HTMLElement => element !== null,
+    );
     if (sections.length === 0) return;
 
+    const visibleIds = new Set<string>();
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
+          if (entry.isIntersecting) visibleIds.add(entry.target.id);
+          else visibleIds.delete(entry.target.id);
         });
+        // 문서 순서상 가장 위에 걸린 섹션을 현재 위치로 본다.
+        const currentId = SPY_IDS.find((id) => visibleIds.has(id)) ?? "";
+        setActive(currentId === HERO_SECTION_ID ? "" : currentId);
       },
       { rootMargin: "-45% 0px -50% 0px" },
     );
@@ -30,14 +40,24 @@ export function SiteHeader() {
     return () => observer.disconnect();
   }, []);
 
+  // 로고는 어느 위치·어느 페이지에서든 메인 페이지 최상단으로 보낸다.
+  const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    setOpen(false);
+    if (pathname !== "/") return;
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setActive("");
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm">
       <Container>
         <div className="flex h-20 items-center justify-between lg:h-24">
           <Link
             href="/"
+            onClick={handleLogoClick}
             className="relative block h-12 w-40 sm:w-44"
-            aria-label="에스씨엔지니어링 홈"
+            aria-label="에스씨엔지니어링 홈 최상단으로 이동"
           >
             <Image
               src="/images/logo-sce.jpg"
@@ -54,18 +74,17 @@ export function SiteHeader() {
               {NAV_ITEMS.map((item) => {
                 const on = active === item.id;
                 return (
-                  <li key={item.id} className="relative py-2">
+                  <li key={item.id} className="py-2">
+                    {/* 활성 상태는 텍스트 색상(오렌지)만으로 표현한다. */}
                     <Link
                       href={item.href}
+                      aria-current={on ? "true" : undefined}
                       className={`text-base font-semibold transition-colors ${
                         on ? "text-orange" : "text-navy hover:text-orange"
                       }`}
                     >
                       {item.label}
                     </Link>
-                    {on && (
-                      <BrandLine className="absolute inset-x-0 -bottom-0.5" />
-                    )}
                   </li>
                 );
               })}
