@@ -78,7 +78,7 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
             role="tabpanel"
             className="mt-12 grid items-start gap-10 lg:grid-cols-[1.08fr_0.92fr]"
           >
-            <div className="relative aspect-[4/3] overflow-hidden bg-navy lg:aspect-auto lg:min-h-[500px]">
+            <div className="relative aspect-[4/3] overflow-hidden bg-concrete lg:aspect-auto lg:min-h-[500px]">
               <Image
                 src={businessAreaImage[area.key]}
                 alt={`${area.title} 현장`}
