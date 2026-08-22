@@ -11,14 +11,14 @@ export function SectionHeading({
   description,
 }: SectionHeadingProps) {
   return (
-    <header className="max-w-4xl">
+    <header>
       <div className="flex items-center gap-4">
         <span className="text-sm font-semibold uppercase tracking-[0.28em] text-orange">
           {eyebrow}
         </span>
         <span className="h-px w-12 bg-orange" aria-hidden="true" />
       </div>
-      <h2 className="mt-5 text-3xl font-bold leading-tight tracking-tight text-navy sm:text-4xl">
+      <h2 className="mt-5 max-w-4xl text-3xl font-bold leading-tight tracking-tight text-navy sm:text-4xl">
         {title}
       </h2>
       {description && (
