@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AchievementGallery } from "@/components/achievements/AchievementGallery";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import {
@@ -84,16 +84,7 @@ export default async function AchievementDetailPage({
         <Container>
           <div className="grid gap-12 pb-16 sm:pb-20 lg:grid-cols-[1.5fr_1fr]">
             <div>
-              <div className="relative aspect-[16/10] overflow-hidden bg-concrete">
-                <Image
-                  src={item.images[0]}
-                  alt={`${item.title} 현장`}
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 60vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
+              <AchievementGallery images={item.images} title={item.title} />
               <p className="mt-10 text-xl font-semibold leading-relaxed text-navy">
                 {item.summary}
               </p>
