@@ -86,7 +86,7 @@ export default async function AchievementDetailPage({
             <div>
               <div className="relative aspect-[16/10] overflow-hidden bg-concrete">
                 <Image
-                  src={item.image}
+                  src={item.images[0]}
                   alt={`${item.title} 현장`}
                   fill
                   priority

@@ -113,8 +113,8 @@ export interface AchievementSource extends ContentRecord {
   areaKey: string;
   /** 사업 분야 표시 라벨 */
   category: string;
-  /** 대표 사진 (public/images 경로) */
-  image: string;
+  /** 프로젝트 사진 목록 (public/images 경로). 첫 장이 목록·OG용 대표 사진이다. */
+  images: string[];
   /** 고객 */
   client: string;
   /** 발주처 */

@@ -200,8 +200,9 @@ export function AchievementsBrowser({
                             className="group flex h-full flex-col"
                           >
                             <div className="relative aspect-[4/3] overflow-hidden bg-concrete">
+                              {/* 목록에서는 첫 번째 사진만 대표로 노출한다. */}
                               <Image
-                                src={item.image}
+                                src={item.images[0]}
                                 alt={`${item.title} 현장`}
                                 fill
                                 sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
