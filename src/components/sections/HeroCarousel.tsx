@@ -71,9 +71,14 @@ export function HeroCarousel({ company }: HeroCarouselProps) {
             </span>
             <span className="h-px w-12 bg-orange" aria-hidden="true" />
           </div>
-          {/* break-keep: 한글이 어절 중간에서 끊기지 않도록 한다("…위한 / 자동화 솔루션"). */}
+          {/* 줄바꿈 위치가 요구사항이라 폭에 맡기지 않고 데이터의 줄 단위로 끊는다.
+              각 줄 내부는 break-keep으로 어절 중간 분리를 막는다. */}
           <h1 className="mt-7 max-w-4xl break-keep text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-            {company.headline}
+            {company.headlineLines.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
           </h1>
           {/* 태그라인과 뒷문장은 데스크톱에서 한 줄로 이어 보이도록 폭을 제한하지 않는다. */}
           <p className="mt-7 break-keep text-lg leading-relaxed text-white sm:text-xl">

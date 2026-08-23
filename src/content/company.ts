@@ -1,5 +1,5 @@
 import type {
-  CompanyInfo,
+  CompanyInfoSource,
   CoreValue,
   LabeledList,
 } from "@/lib/content/types";
@@ -8,14 +8,14 @@ import type {
  * 회사 기본 정보 (출처: 회사 소개서 2026-08-20).
  * 컴포넌트는 이 값을 직접 import 하지 말고 @/lib/content/company accessor 를 경유한다.
  */
-export const companyInfo: CompanyInfo = {
+export const companyInfo: CompanyInfoSource = {
   name: "에스씨엔지니어링(주)",
   nameEn: "SC ENGINEERING Co., Ltd",
   shortName: "SCE",
   ceo: "이구호",
   // TODO: 실제 사업자등록번호 확인 후 교체 (임시값)
   businessNumber: "123-45-67890",
-  headline: "스마트 공간과 최첨단 인프라를 위한 자동화 솔루션",
+  headlineLines: ["스마트 공간과 최첨단 인프라를 위한", "자동화 솔루션"],
   tagline: "미래를 제어하는 기술의 신뢰를 이어가는 기업",
   mainBusiness: ["산업 자동화", "빌딩 자동화", "데이터센터 자동화"],
   contact: {

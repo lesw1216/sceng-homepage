@@ -43,7 +43,9 @@ export interface CompanyInfo {
   ceo: string;
   /** 사업자등록번호 */
   businessNumber: string;
-  /** 대표 슬로건 */
+  /** Hero 제목. 줄바꿈 위치가 디자인 요구사항이라 줄 단위로 관리한다. */
+  headlineLines: string[];
+  /** headlineLines를 한 줄로 이은 값 (accessor 파생). 평문이 필요한 곳에서 쓴다. */
   headline: string;
   /** 보조 태그라인 */
   tagline: string;
@@ -51,6 +53,9 @@ export interface CompanyInfo {
   mainBusiness: string[];
   contact: CompanyContact;
 }
+
+/** 원천 데이터가 제공하는 회사 정보. headline은 accessor가 headlineLines에서 파생한다. */
+export type CompanyInfoSource = Omit<CompanyInfo, "headline">;
 
 /** 핵심 가치 카드 */
 export interface CoreValue {
