@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { businessAreaImage } from "@/lib/images";
@@ -51,7 +50,7 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
                     setActive(areas[nextIndex].key);
                     tabRefs.current[nextIndex]?.focus();
                   }}
-                  className="relative pb-4"
+                  className="group relative pb-4"
                   role="tab"
                   aria-selected={on}
                   aria-controls="business-panel"
@@ -59,14 +58,20 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
                 >
                   <span
                     className={`text-base font-semibold transition-colors ${
-                      on ? "text-orange" : "text-navy hover:text-orange"
+                      on ? "text-navy" : "text-steel group-hover:text-navy"
                     }`}
                   >
                     {a.title}
                   </span>
-                  {on && (
-                    <BrandLine className="absolute inset-x-0 -bottom-px" />
-                  )}
+                  {/* hover 시 왼쪽 → 오른쪽으로 늘어나고, 벗어나면 반대 방향으로 사라진다. */}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute inset-x-0 -bottom-px h-0.5 bg-navy transition-transform duration-300 ${
+                      on
+                        ? "scale-x-100"
+                        : "origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100"
+                    }`}
+                  />
                 </button>
               );
             })}
