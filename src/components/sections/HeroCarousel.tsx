@@ -64,17 +64,19 @@ export function HeroCarousel({ company }: HeroCarouselProps) {
       ))}
 
       <Container className="relative z-10 flex min-h-[680px] items-center py-24 sm:min-h-[760px]">
-        <div className="max-w-4xl pt-12 text-white text-on-photo">
+        <div className="pt-12 text-white text-on-photo">
           <div className="flex items-center gap-4">
             <span className="text-sm font-semibold uppercase tracking-[0.3em] text-white">
               Systems and Controls
             </span>
             <span className="h-px w-12 bg-orange" aria-hidden="true" />
           </div>
-          <h1 className="mt-7 max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+          {/* break-keep: 한글이 어절 중간에서 끊기지 않도록 한다("…위한 / 자동화 솔루션"). */}
+          <h1 className="mt-7 max-w-4xl break-keep text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
             {company.headline}
           </h1>
-          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white sm:text-xl">
+          {/* 태그라인과 뒷문장은 데스크톱에서 한 줄로 이어 보이도록 폭을 제한하지 않는다. */}
+          <p className="mt-7 break-keep text-lg leading-relaxed text-white sm:text-xl">
             {company.tagline}. 분석과 설계부터 제작, 설치와 시운전까지 하나의 흐름으로 완성합니다.
           </p>
         </div>
