@@ -39,6 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
       company.nameEn,
     ],
     alternates: { canonical: "/" },
+    icons: { icon: "/sce-symbol.svg", shortcut: "/sce-symbol.svg" },
     robots: { index: true, follow: true },
     openGraph: {
       type: "website",

@@ -4,6 +4,7 @@
 
 - base: main
 - branch: refactor/detail-first
+- branch가 refactor/detail-first라면 브랜치 유지
 
 ## 요구사항 문서
 
