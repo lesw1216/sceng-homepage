@@ -18,15 +18,14 @@ export function SiteFooter({ company }: SiteFooterProps) {
       <Container>
         <div className="grid gap-10 py-16 md:grid-cols-[1.4fr_1fr]">
           <div>
-            <div className="relative h-12 w-44">
-              <Image
-                src="/images/logo-sce.jpg"
-                alt="에스씨엔지니어링 로고"
-                fill
-                sizes="176px"
-                className="object-contain object-left"
-              />
-            </div>
+            <Image
+              src="/sce-logo-ko.svg"
+              alt="에스씨엔지니어링 로고"
+              width={868}
+              height={155}
+              unoptimized
+              className="h-10 w-auto max-w-full object-contain object-left"
+            />
             <p className="mt-4 max-w-md text-sm leading-relaxed">{company.tagline}</p>
             {/* 회사 기본 기업정보 (Contact와 일부 중복 허용) */}
             <address className="mt-4 space-y-1 text-sm not-italic leading-relaxed text-ink/70">

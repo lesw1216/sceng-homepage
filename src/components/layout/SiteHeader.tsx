@@ -52,24 +52,26 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm">
       <Container>
-        <div className="flex h-20 items-center justify-between lg:h-24">
+        <div className="flex h-14 items-center justify-between sm:h-20 xl:h-24">
+          {/* 로고 높이 = 헤더 높이 - 4px → 하단 BrandLine과 2px 간격 */}
           <Link
             href="/"
             onClick={handleLogoClick}
-            className="relative block h-12 w-40 sm:w-44"
+            className="block h-[calc(100%-4px)]"
             aria-label="에스씨엔지니어링 홈 최상단으로 이동"
           >
             <Image
-              src="/images/logo-sce.jpg"
+              src="/sce-logo-ko.svg"
               alt="에스씨엔지니어링 로고"
-              fill
+              width={868}
+              height={155}
               priority
-              sizes="176px"
-              className="object-contain object-left"
+              unoptimized
+              className="h-full w-auto max-w-full object-contain object-left"
             />
           </Link>
 
-          <nav className="hidden md:block" aria-label="주요 메뉴">
+          <nav className="hidden lg:block" aria-label="주요 메뉴">
             <ul className="flex items-center gap-8 lg:gap-10">
               {NAV_ITEMS.map((item) => {
                 const on = active === item.id;
@@ -94,7 +96,7 @@ export function SiteHeader() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="text-navy md:hidden"
+            className="text-navy lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label="메뉴 열기"
@@ -130,7 +132,7 @@ export function SiteHeader() {
       {open && (
         <nav
           id="mobile-menu"
-          className="bg-white md:hidden"
+          className="bg-white lg:hidden"
           aria-label="모바일 메뉴"
         >
           <Container>

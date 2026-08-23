@@ -31,7 +31,7 @@
 - **단일 페이지**(`/`) + 앵커 섹션: `#top` `#about` `#tech` `#business` `#achievements` `#contact`. nav는 `/#섹션` 앵커.
 - 실적 상세만 별도 라우트 `/achievements/[slug]` (목록 복귀는 `/#achievements`).
 - **모든 섹션 배경은 흰색으로 통일**. 색은 텍스트·테두리·소형 액센트에만.
-- 헤더/푸터는 화이트, `RootLayout` 공통. 헤더 로고 `public/images/logo-sce.jpg`.
+- 헤더/푸터는 화이트, `RootLayout` 공통. 로고는 `public/sce-logo-ko.svg`(헤더·푸터 공용), 파비콘은 `public/sce-symbol.svg`.
 - 섹션 제목은 `SectionHeading`(오렌지 영문 라벨 + 바 + h2, 구분선 없음). 상세 페이지는 `PageHero`.
 - 보유기술은 Stepper 없이 3개 Box로 구성하고, 단계 번호·제목을 Box 내부에 통합한다.
 
