@@ -23,15 +23,16 @@
 ## 브랜드 라인 (BrandLine)
 - 로고 규칙을 선(divider)에 적용: **오렌지(`#ED512C`) : 네이비(`#242145`) = 2 : 1**, 두 색 경계는 "/" 형태의 **2px** 사선 간격.
 - 구현: flex 2:1 + `gap-[2px]` + `skewX(-20deg)`(overflow-hidden). `components/ui/BrandLine`.
-- 헤더/푸터 경계, 카드 상단선(핵심가치·보유기술) 등 **주요 구획선에만** 사용. 섹션마다 반복되는 구분선은 넣지 않는다.
-- **헤더 nav active 밑줄에는 사용하지 않는다.** nav 활성 상태는 텍스트 색상(오렌지)만으로 표현한다.
+- 푸터 경계, 카드 상단선(핵심가치·보유기술), 검색 입력 포커스 밑줄 등 **주요 구획선에만** 사용. 섹션마다 반복되는 구분선은 넣지 않는다.
+- **헤더 하단 경계에는 사용하지 않는다.** 헤더는 회색 1px 선(`border-ink/15`)으로 닫고, 스크롤 시 shadow로 본문과 구분한다.
+- **헤더 nav·사업영역 탭 밑줄에도 사용하지 않는다.** 비활성 `steel` / 활성 `navy` + navy 밑줄, hover 시 좌→우로 늘어나는 밑줄로 표현한다.
 - 세밀한 내부 1px 구분선(표 행 등)은 `border-ink/10`로 가볍게 유지.
 
 ## 레이아웃 / 페이지
 - **단일 페이지**(`/`) + 앵커 섹션: `#top` `#about` `#tech` `#business` `#achievements` `#contact`. nav는 `/#섹션` 앵커.
 - 실적 상세만 별도 라우트 `/achievements/[slug]` (목록 복귀는 `/#achievements`).
 - **모든 섹션 배경은 흰색으로 통일**. 색은 텍스트·테두리·소형 액센트에만.
-- 헤더/푸터는 화이트, `RootLayout` 공통. 로고는 `public/sce-logo-ko.svg`(헤더·푸터 공용), 파비콘은 `public/sce-symbol.svg`(+ 레거시 폴백 `src/app/favicon.ico`).
+- 헤더/푸터는 화이트, `RootLayout` 공통. 헤더 nav는 `text-lg`(18px)로 본문 링크보다 한 단계 크게 둔다. 로고는 `public/sce-logo-ko.svg`(헤더·푸터 공용), 파비콘은 `public/sce-symbol.svg`(+ 레거시 폴백 `src/app/favicon.ico`).
 - 섹션 제목은 `SectionHeading`(오렌지 영문 라벨 + 바 + h2, 구분선 없음). 상세 페이지는 `PageHero`.
 - 보유기술은 Stepper 없이 3개 Box로 구성하고, 단계 번호·제목을 Box 내부에 통합한다.
 
