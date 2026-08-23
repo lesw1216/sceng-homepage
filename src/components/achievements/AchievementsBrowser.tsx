@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { type FormEvent, useMemo, useState } from "react";
+import { type FormEvent, type ReactNode, useMemo, useState } from "react";
 import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -25,6 +25,20 @@ interface EmptyStateProps {
   description: string;
 }
 
+/** A. 홈페이지 개설 초기 — 등록된 실적 자체가 하나도 없는 경우 */
+const EMPTY_NO_RECORD: EmptyStateProps = {
+  title: "아직 등록된 실적이 없습니다.",
+  description:
+    "공식 실적 자료를 정리해 순차적으로 공개할 예정입니다. 진행 중인 프로젝트 문의는 아래 문의하기를 이용해 주시기 바랍니다.",
+};
+
+/** B. 연도·사업 분야·검색 조건에 맞는 실적이 없는 경우 */
+const EMPTY_NO_MATCH: EmptyStateProps = {
+  title: "선택하신 조건에 해당하는 실적이 없습니다.",
+  description:
+    "검색어를 바꾸거나 사업 분야·연도 필터를 조정해 다시 찾아보시기 바랍니다.",
+};
+
 /** 실적이 하나도 없는 경우와 조건에 맞는 실적이 없는 경우에 공통으로 쓰는 안내 영역 */
 function EmptyState({ title, description }: EmptyStateProps) {
   return (
@@ -32,6 +46,89 @@ function EmptyState({ title, description }: EmptyStateProps) {
       <p className="text-lg font-semibold text-navy">{title}</p>
       <p className="mt-2 text-base leading-relaxed text-ink/70">{description}</p>
     </div>
+  );
+}
+
+interface FilterButtonProps {
+  isActive: boolean;
+  onClick: () => void;
+  children: ReactNode;
+}
+
+/** 사업 분야 필터 버튼. 활성은 오렌지 밑줄 고정, hover는 네이비 밑줄이 좌→우로 늘어난다. */
+function FilterButton({ isActive, onClick, children }: FilterButtonProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={isActive}
+      className={`group relative pb-1 text-base transition-colors ${
+        isActive ? "font-semibold text-orange" : "font-medium text-steel hover:text-navy"
+      }`}
+    >
+      {children}
+      <span
+        aria-hidden="true"
+        className={`absolute inset-x-0 bottom-0 h-0.5 transition-transform duration-300 ${
+          isActive
+            ? "scale-x-100 bg-orange"
+            : "origin-right scale-x-0 bg-navy group-hover:origin-left group-hover:scale-x-100"
+        }`}
+      />
+    </button>
+  );
+}
+
+const CHEVRON_PATH = {
+  prev: "M15 19l-7-7 7-7",
+  next: "M9 5l7 7-7 7",
+} as const;
+
+interface StepArrowProps {
+  direction: keyof typeof CHEVRON_PATH;
+  onClick: () => void;
+}
+
+/**
+ * 리스트 좌우 이동 꺽쇠 — 배경·테두리 없이 기호만 노출한다.
+ * 리스트 바깥에 겹쳐 두어 그리드 좌우 폭을 필터 행과 맞춘다.
+ */
+function StepArrow({ direction, onClick }: StepArrowProps) {
+  const isPrev = direction === "prev";
+  const chevron = (colorClass: string) => (
+    <svg
+      className={`h-9 w-9 ${colorClass}`}
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.8}
+      stroke="currentColor"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d={CHEVRON_PATH[direction]}
+      />
+    </svg>
+  );
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={isPrev ? "이전 페이지" : "다음 페이지"}
+      className={`group absolute top-1/2 hidden -translate-y-1/2 sm:block ${
+        isPrev ? "-left-8 lg:-left-9" : "-right-8 lg:-right-9"
+      }`}
+    >
+      <span className="relative block h-9 w-9">
+        {chevron("text-steel")}
+        {/* hover 시 네이비가 왼쪽 → 오른쪽으로 덮이고, 벗어나면 반대 방향으로 걷힌다. */}
+        <span className="absolute inset-0 [clip-path:inset(0_100%_0_0)] transition-[clip-path] duration-300 group-hover:[clip-path:inset(0_0_0_0)]">
+          {chevron("text-navy")}
+        </span>
+      </span>
+    </button>
   );
 }
 
@@ -51,6 +148,9 @@ export function AchievementsBrowser({
     () => filterAchievements(items, { keyword, areaKey, year }),
     [areaKey, items, keyword, year],
   );
+
+  // 데모 데이터로 시안을 검토하는 동안에는 두 Empty State 디자인도 함께 보여준다.
+  const showsEmptyStatePreview = items.some((item) => item.isDemo);
 
   const totalPages = getTotalPages(filtered.length);
   const currentPage = Math.min(page, totalPages);
@@ -72,23 +172,12 @@ export function AchievementsBrowser({
     setPage(1);
   };
 
-  const areaButtonClass = (isActive: boolean) =>
-    `text-base transition-colors ${
-      isActive
-        ? "font-semibold text-navy underline underline-offset-8"
-        : "font-medium text-steel hover:text-navy"
-    }`;
-
   const pageButtonClass = (isActive: boolean) =>
     `grid h-10 min-w-10 place-items-center border px-3 text-base transition-colors ${
       isActive
         ? "border-navy font-semibold text-navy"
         : "border-transparent font-medium text-steel hover:text-navy"
     }`;
-
-  /** 리스트 좌우 이동 꺽쇠 — 배경·테두리 없이 기호만 노출한다. */
-  const stepArrowClass =
-    "absolute top-1/2 hidden -translate-y-1/2 place-items-center text-steel transition-colors hover:text-navy sm:grid";
 
   return (
     <section id="achievements" className="scroll-mt-16 sm:scroll-mt-20 bg-white">
@@ -102,34 +191,27 @@ export function AchievementsBrowser({
 
           {items.length === 0 ? (
             <div className="mt-12">
-              <EmptyState
-                title="아직 등록된 실적이 없습니다."
-                description="공식 실적 자료를 정리해 순차적으로 공개할 예정입니다. 진행 중인 프로젝트 문의는 아래 문의하기를 이용해 주시기 바랍니다."
-              />
+              <EmptyState {...EMPTY_NO_RECORD} />
             </div>
           ) : (
             <>
               {/* 왼쪽: 사업 분야 + 연도 / 오른쪽: 검색 */}
-              <div className="mt-12 flex flex-wrap items-center justify-between gap-x-10 gap-y-5 border-y border-ink/10 py-6">
+              <div className="mt-12 flex flex-wrap items-center justify-between gap-x-10 gap-y-5 border-b border-ink/10 py-6">
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-                  <button
-                    type="button"
+                  <FilterButton
+                    isActive={areaKey === ALL_FILTER}
                     onClick={() => handleAreaChange(ALL_FILTER)}
-                    aria-pressed={areaKey === ALL_FILTER}
-                    className={areaButtonClass(areaKey === ALL_FILTER)}
                   >
                     전체
-                  </button>
+                  </FilterButton>
                   {categories.map((category) => (
-                    <button
+                    <FilterButton
                       key={category.key}
-                      type="button"
+                      isActive={areaKey === category.key}
                       onClick={() => handleAreaChange(category.key)}
-                      aria-pressed={areaKey === category.key}
-                      className={areaButtonClass(areaKey === category.key)}
                     >
                       {category.label}
-                    </button>
+                    </FilterButton>
                   ))}
 
                   <select
@@ -198,10 +280,7 @@ export function AchievementsBrowser({
 
               {filtered.length === 0 ? (
                 <div className="mt-10">
-                  <EmptyState
-                    title="선택하신 조건에 해당하는 실적이 없습니다."
-                    description="검색어를 바꾸거나 사업 분야·연도 필터를 조정해 다시 찾아보시기 바랍니다."
-                  />
+                  <EmptyState {...EMPTY_NO_MATCH} />
                 </div>
               ) : (
                 <>
@@ -212,7 +291,7 @@ export function AchievementsBrowser({
                         <li key={item.slug}>
                           <Link
                             href={`/achievements/${item.slug}`}
-                            className="group/card flex h-full flex-col overflow-hidden rounded-sm border border-ink/15 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
+                            className="group/card relative flex h-full flex-col overflow-hidden rounded-sm border border-ink/15 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
                           >
                             <div className="relative aspect-[4/3] overflow-hidden bg-concrete">
                               {/* 목록에서는 첫 번째 사진만 대표로 노출한다. */}
@@ -250,57 +329,30 @@ export function AchievementsBrowser({
                                 </div>
                               </dl>
                             </div>
+                            {/* hover 시 왼쪽 → 오른쪽으로 늘어나고, 벗어나면 반대 방향으로 사라진다. */}
+                            <span
+                              aria-hidden="true"
+                              className="absolute inset-x-0 bottom-0 block origin-right scale-x-0 transition-transform duration-300 group-hover/card:origin-left group-hover/card:scale-x-100"
+                            >
+                              <BrandLine />
+                            </span>
                           </Link>
                         </li>
                       ))}
                     </ul>
 
                     {currentPage > 1 && (
-                      <button
-                        type="button"
+                      <StepArrow
+                        direction="prev"
                         onClick={() => setPage(currentPage - 1)}
-                        aria-label="이전 페이지"
-                        className={`${stepArrowClass} -left-7`}
-                      >
-                        <svg
-                          className="h-7 w-7"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.8}
-                          stroke="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15 19l-7-7 7-7"
-                          />
-                        </svg>
-                      </button>
+                      />
                     )}
 
                     {currentPage < totalPages && (
-                      <button
-                        type="button"
+                      <StepArrow
+                        direction="next"
                         onClick={() => setPage(currentPage + 1)}
-                        aria-label="다음 페이지"
-                        className={`${stepArrowClass} -right-7`}
-                      >
-                        <svg
-                          className="h-7 w-7"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.8}
-                          stroke="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                      </button>
+                      />
                     )}
                   </div>
 
@@ -343,6 +395,33 @@ export function AchievementsBrowser({
                     </nav>
                   )}
                 </>
+              )}
+
+              {showsEmptyStatePreview && (
+                /* 요구사항 6.11 — 실제 자료 수신 후 이 블록은 제거한다. */
+                <div className="mt-24 border-t border-dashed border-steel/40 pt-10">
+                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-steel">
+                    Empty State Preview
+                  </p>
+                  <p className="mt-2 text-base leading-relaxed text-ink/70">
+                    데모 데이터로 검토 중이라 실제로는 나타나지 않는 두 가지 안내 화면을
+                    함께 표시합니다.
+                  </p>
+                  <div className="mt-8 grid gap-8 lg:grid-cols-2">
+                    <div>
+                      <p className="mb-3 text-sm font-medium text-steel">
+                        A. 홈페이지 개설 초기 — 등록된 실적이 하나도 없는 경우
+                      </p>
+                      <EmptyState {...EMPTY_NO_RECORD} />
+                    </div>
+                    <div>
+                      <p className="mb-3 text-sm font-medium text-steel">
+                        B. 연도·사업 분야·검색 조건에 맞는 실적이 없는 경우
+                      </p>
+                      <EmptyState {...EMPTY_NO_MATCH} />
+                    </div>
+                  </div>
+                </div>
               )}
             </>
           )}

@@ -63,6 +63,20 @@ summary,
   outline-offset: 3px;
 }
 
+/* 폼 컨트롤에는 오렌지 사각 테두리를 쓰지 않는다(요구사항 06-projects 추가 ver.1).
+   Tailwind 유틸리티는 @layer utilities 안에 있어 레이어 밖의 위 규칙을 이길 수 없으므로,
+   컴포넌트가 아니라 여기서 덮어야 한다.
+   검색 입력은 대표 선 밑줄이, select는 네이비 테두리가 포커스 표시자 역할을 한다. */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
+select:focus-visible {
+  border-color: var(--color-navy);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
