@@ -13,7 +13,7 @@ export function About({ profile }: { profile: CompanyProfile }) {
   ];
 
   return (
-    <section id="about" className="scroll-mt-24 bg-white">
+    <section id="about" className="scroll-mt-16 sm:scroll-mt-20 bg-white">
       <Container>
         <div className="border-t border-ink/10 py-24 sm:py-32">
           <SectionHeading

@@ -25,14 +25,20 @@
 - 구현: flex 2:1 + `gap-[2px]` + `skewX(-20deg)`(overflow-hidden). `components/ui/BrandLine`.
 - 푸터 경계, 카드 상단선(핵심가치·보유기술), 검색 입력 포커스 밑줄 등 **주요 구획선에만** 사용. 섹션마다 반복되는 구분선은 넣지 않는다.
 - **헤더 하단 경계에는 사용하지 않는다.** 헤더는 회색 1px 선(`border-ink/15`)으로 닫고, 스크롤 시 shadow로 본문과 구분한다.
-- **헤더 nav·사업영역 탭 밑줄에도 사용하지 않는다.** 비활성 `steel` / 활성 `navy` + navy 밑줄, hover 시 좌→우로 늘어나는 밑줄로 표현한다.
+- **헤더 nav·사업영역 탭 밑줄에도 사용하지 않는다.**
+  - 헤더 nav: 비활성 `navy` / 활성 `orange` + orange 고정 밑줄, hover 시 navy 밑줄이 좌→우로 늘어난다.
+  - 사업영역 탭: 비활성 `steel` / 활성 `navy` + navy 밑줄, hover 시 좌→우로 늘어난다.
 - 세밀한 내부 1px 구분선(표 행 등)은 `border-ink/10`로 가볍게 유지.
 
 ## 레이아웃 / 페이지
 - **단일 페이지**(`/`) + 앵커 섹션: `#top` `#about` `#tech` `#business` `#achievements` `#contact`. nav는 `/#섹션` 앵커.
 - 실적 상세만 별도 라우트 `/achievements/[slug]` (목록 복귀는 `/#achievements`).
 - **모든 섹션 배경은 흰색으로 통일**. 색은 텍스트·테두리·소형 액센트에만.
-- 헤더/푸터는 화이트, `RootLayout` 공통. 헤더 nav는 `text-lg`(18px)로 본문 링크보다 한 단계 크게 둔다. 로고는 `public/sce-logo-ko.svg`(헤더·푸터 공용), 파비콘은 `public/sce-symbol.svg`(+ 레거시 폴백 `src/app/favicon.ico`).
+- 헤더/푸터는 화이트, `RootLayout` 공통. 헤더 높이는 `h-16 sm:h-20`, 로고 높이는 `h-9 sm:h-12`.
+  헤더 nav는 `text-lg`(18px)로 본문 링크보다 한 단계 크게 둔다.
+- 앵커 섹션의 `scroll-mt`는 헤더 높이와 정확히 일치시킨다: `scroll-mt-16 sm:scroll-mt-20`.
+  헤더 높이를 바꾸면 이 값도 함께 바꾼다.
+- 로고는 `public/sce-logo-ko.svg`(헤더·푸터 공용), 파비콘은 `public/sce-symbol.svg`(+ 레거시 폴백 `src/app/favicon.ico`).
 - 섹션 제목은 `SectionHeading`(오렌지 영문 라벨 + 바 + h2, 구분선 없음). 상세 페이지는 `PageHero`.
 - 보유기술은 Stepper 없이 3개 Box로 구성하고, 단계 번호·제목을 Box 내부에 통합한다.
 

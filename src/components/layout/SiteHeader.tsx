@@ -5,7 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type MouseEvent, useEffect, useState } from "react";
 import { Container } from "@/components/ui/Container";
-import { HERO_SECTION_ID, NAV_ITEMS } from "./navigation";
+import {
+  ACHIEVEMENTS_PATH_PREFIX,
+  ACHIEVEMENTS_SECTION_ID,
+  HERO_SECTION_ID,
+  NAV_ITEMS,
+} from "./navigation";
 
 /** 스크롤 스파이 대상. Hero(top)는 nav 항목이 아니지만 "활성 없음"을 판정하는 데 필요하다. */
 const SPY_IDS = [HERO_SECTION_ID, ...NAV_ITEMS.map((item) => item.id)];
@@ -16,7 +21,9 @@ export function SiteHeader() {
   const [active, setActive] = useState("");
   const [scrolled, setScrolled] = useState(false);
 
-  // 단일 페이지 스크롤 스파이 (클릭 이동·수동 스크롤 모두 현재 섹션을 반영)
+  // 단일 페이지 스크롤 스파이 (클릭 이동·수동 스크롤 모두 현재 섹션을 반영).
+  // 헤더는 RootLayout에 상주해 route 전환에도 언마운트되지 않으므로, pathname을 의존성에
+  // 넣지 않으면 observer가 떨어져 나간 옛 섹션 노드를 계속 관찰해 활성화가 죽는다.
   useEffect(() => {
     const sections = SPY_IDS.map((id) => document.getElementById(id)).filter(
       (element): element is HTMLElement => element !== null,
@@ -38,7 +45,7 @@ export function SiteHeader() {
     );
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   // 헤더와 본문 배경이 모두 흰색이라, 스크롤 시 그림자로 두 영역을 구분한다.
   useEffect(() => {
@@ -47,6 +54,14 @@ export function SiteHeader() {
     window.addEventListener("scroll", syncScrolled, { passive: true });
     return () => window.removeEventListener("scroll", syncScrolled);
   }, []);
+
+  // 실적 상세 페이지에는 스파이 대상 섹션이 없으므로 실적현황을 활성으로 고정한다.
+  // 그 외 홈이 아닌 페이지에서는 직전 홈에서의 활성 상태가 남지 않도록 비운다.
+  const activeId = pathname.startsWith(ACHIEVEMENTS_PATH_PREFIX)
+    ? ACHIEVEMENTS_SECTION_ID
+    : pathname === "/"
+      ? active
+      : "";
 
   // 로고는 어느 위치·어느 페이지에서든 메인 페이지 최상단으로 보낸다.
   const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -65,7 +80,7 @@ export function SiteHeader() {
     >
       <Container>
         <div className="flex h-16 items-center justify-between sm:h-20">
-          {/* 로고 높이는 60px 고정, 폭은 원본 비율(868:155)을 따른다. */}
+          {/* 로고 높이는 48px 고정(모바일 36px), 폭은 원본 비율(868:155)을 따른다. */}
           <Link
             href="/"
             onClick={handleLogoClick}
@@ -79,31 +94,32 @@ export function SiteHeader() {
               height={155}
               priority
               unoptimized
-              className="h-10 w-auto max-w-full object-contain object-left sm:h-15"
+              className="h-9 w-auto max-w-full object-contain object-left sm:h-12"
             />
           </Link>
 
           <nav className="hidden lg:block" aria-label="주요 메뉴">
             <ul className="flex items-center gap-8 lg:gap-10">
               {NAV_ITEMS.map((item) => {
-                const on = active === item.id;
+                const on = activeId === item.id;
                 return (
                   <li key={item.id}>
                     <Link
                       href={item.href}
                       aria-current={on ? "true" : undefined}
                       className={`group relative block py-2 text-lg font-semibold transition-colors ${
-                        on ? "text-navy" : "text-steel hover:text-navy"
+                        on ? "text-orange" : "text-navy"
                       }`}
                     >
                       {item.label}
-                      {/* hover 시 왼쪽 → 오른쪽으로 늘어나고, 벗어나면 반대 방향으로 사라진다. */}
+                      {/* 활성은 오렌지 고정 밑줄, hover는 네이비 밑줄이
+                          왼쪽 → 오른쪽으로 늘어나고 벗어나면 반대 방향으로 사라진다. */}
                       <span
                         aria-hidden="true"
-                        className={`absolute inset-x-0 bottom-0 h-0.5 bg-navy transition-transform duration-300 ${
+                        className={`absolute inset-x-0 bottom-0 h-0.5 transition-transform duration-300 ${
                           on
-                            ? "scale-x-100"
-                            : "origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100"
+                            ? "scale-x-100 bg-orange"
+                            : "origin-right scale-x-0 bg-navy group-hover:origin-left group-hover:scale-x-100"
                         }`}
                       />
                     </Link>
@@ -156,7 +172,7 @@ export function SiteHeader() {
           <Container>
             <ul className="flex flex-col divide-y divide-ink/10 py-1">
               {NAV_ITEMS.map((item) => {
-                const on = active === item.id;
+                const on = activeId === item.id;
                 return (
                   <li key={item.id}>
                     <Link
@@ -164,7 +180,7 @@ export function SiteHeader() {
                       onClick={() => setOpen(false)}
                       aria-current={on ? "true" : undefined}
                       className={`block py-3 text-lg font-semibold ${
-                        on ? "text-navy" : "text-steel"
+                        on ? "text-orange" : "text-navy"
                       }`}
                     >
                       {item.label}

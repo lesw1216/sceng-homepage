@@ -9,6 +9,12 @@ export interface NavItem {
 /** Hero(메인 최상단) 섹션 id. nav 항목은 아니지만 스크롤 스파이 기준점으로 쓴다. */
 export const HERO_SECTION_ID = "top";
 
+/** 실적현황 섹션 id. 실적 상세 페이지에서도 이 메뉴를 활성으로 유지한다. */
+export const ACHIEVEMENTS_SECTION_ID = "achievements";
+
+/** 실적 상세 route prefix */
+export const ACHIEVEMENTS_PATH_PREFIX = "/achievements";
+
 /** 단일 페이지 앵커 네비게이션 (헤더·푸터 공용) */
 export const NAV_ITEMS: NavItem[] = [
   { href: "/#about", id: "about", label: "회사소개" },

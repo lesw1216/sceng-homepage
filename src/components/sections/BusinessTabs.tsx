@@ -21,7 +21,7 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
   const area = areas.find((a) => a.key === active) ?? areas[0];
 
   return (
-    <section id="business" className="scroll-mt-24 bg-white">
+    <section id="business" className="scroll-mt-16 sm:scroll-mt-20 bg-white">
       <Container>
         <div className="border-t border-ink/10 py-24 sm:py-32">
           <SectionHeading

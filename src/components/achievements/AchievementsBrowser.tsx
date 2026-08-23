@@ -91,7 +91,7 @@ export function AchievementsBrowser({
     "absolute top-1/2 hidden -translate-y-1/2 place-items-center text-steel transition-colors hover:text-navy sm:grid";
 
   return (
-    <section id="achievements" className="scroll-mt-24 bg-white">
+    <section id="achievements" className="scroll-mt-16 sm:scroll-mt-20 bg-white">
       <Container>
         <div className="border-t border-ink/10 py-24 sm:py-32">
           <SectionHeading
