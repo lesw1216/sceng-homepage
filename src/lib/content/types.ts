@@ -127,10 +127,8 @@ export interface Metric {
 export interface AchievementSource extends ContentRecord {
   /** 실제 실적이 아닌 UI 확인용 데모 레코드 */
   isDemo?: boolean;
-  /** 사업 분야 (businessAreas의 key) */
+  /** 사업 분야 (ACHIEVEMENT_CATEGORIES의 key) */
   areaKey: string;
-  /** 사업 분야 표시 라벨 */
-  category: string;
   /** 프로젝트 사진 목록 (public/images 경로). 첫 장이 목록·OG용 대표 사진이다. */
   images: string[];
   /** 고객 */
@@ -149,12 +147,14 @@ export interface AchievementSource extends ContentRecord {
   metrics?: Metric[];
 }
 
-/** 화면에서 소비하는 실적 1건. year·period는 accessor가 파생한다. */
+/** 화면에서 소비하는 실적 1건. year·period·category는 accessor가 파생한다. */
 export interface Achievement extends AchievementSource {
   /** 시작일 기준 연도 (필터 키) */
   year: number;
   /** 표시용 기간 문자열 */
   period: string;
+  /** areaKey를 ACHIEVEMENT_CATEGORIES에서 조회한 표시 라벨 */
+  category: string;
 }
 
 /** 실적 사업 분야 필터 선택지 */

@@ -312,20 +312,20 @@ export function AchievementsBrowser({
                               </h3>
                               <dl className="mt-3 space-y-1 text-sm leading-relaxed text-ink/75">
                                 <div className="flex gap-2">
-                                  <dt className="shrink-0 text-navy">고객</dt>
-                                  <dd>{item.client}</dd>
+                                  <dt className="shrink-0 font-bold text-navy">고객</dt>
+                                  <dd className="min-w-0 flex-1 truncate">{item.client}</dd>
                                 </div>
                                 <div className="flex gap-2">
-                                  <dt className="shrink-0 text-navy">발주처</dt>
-                                  <dd>{item.orderer}</dd>
+                                  <dt className="shrink-0 font-bold text-navy">발주처</dt>
+                                  <dd className="min-w-0 flex-1 truncate">{item.orderer}</dd>
                                 </div>
                                 <div className="flex gap-2">
-                                  <dt className="shrink-0 text-navy">기간</dt>
-                                  <dd>{item.period}</dd>
+                                  <dt className="shrink-0 font-bold text-navy">기간</dt>
+                                  <dd className="min-w-0 flex-1 truncate">{item.period}</dd>
                                 </div>
                                 <div className="flex gap-2">
-                                  <dt className="shrink-0 text-navy">위치</dt>
-                                  <dd>{item.location}</dd>
+                                  <dt className="shrink-0 font-bold text-navy">위치</dt>
+                                  <dd className="min-w-0 flex-1 truncate">{item.location}</dd>
                                 </div>
                               </dl>
                             </div>

@@ -1,3 +1,4 @@
+import { ACHIEVEMENT_CATEGORIES } from "@/content/achievementCategories";
 import { achievements } from "@/content/achievements";
 import type {
   Achievement,
@@ -15,12 +16,21 @@ function formatMonth(date: string): string {
   return date.replace("-", ".");
 }
 
-/** 원천 레코드 → 화면용 레코드 (year·period 파생) */
+/** areaKey → ACHIEVEMENT_CATEGORIES 표시 라벨 (정의에 없는 key는 areaKey를 그대로 노출) */
+function categoryLabelOf(areaKey: string): string {
+  return (
+    ACHIEVEMENT_CATEGORIES.find((category) => category.key === areaKey)?.label ??
+    areaKey
+  );
+}
+
+/** 원천 레코드 → 화면용 레코드 (year·period·category 파생) */
 function toAchievement(source: AchievementSource): Achievement {
   return {
     ...source,
     year: yearOf(source.startDate),
     period: `${formatMonth(source.startDate)} ~ ${formatMonth(source.endDate)}`,
+    category: categoryLabelOf(source.areaKey),
   };
 }
 
@@ -58,13 +68,12 @@ export async function getAchievementYears(): Promise<number[]> {
   return [...years].sort((a, b) => b - a);
 }
 
-/** 사업 분야 필터 선택지 (실적 데이터에 존재하는 분야만) */
+/**
+ * 실적현황 상세 탭 선택지. 등록된 실적 유무와 무관하게 고정 목록을 그대로 반환한다
+ * (해당 분야 실적이 0건이어도 탭은 노출하고, 목록은 Empty State로 안내한다).
+ */
 export async function getAchievementCategories(): Promise<
   AchievementCategory[]
 > {
-  const byKey = new Map<string, string>();
-  achievements.forEach((achievement) => {
-    byKey.set(achievement.areaKey, achievement.category);
-  });
-  return [...byKey].map(([key, label]) => ({ key, label }));
+  return ACHIEVEMENT_CATEGORIES;
 }

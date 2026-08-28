@@ -104,7 +104,7 @@ export default async function AchievementDetailPage({
                       key={row.label}
                       className="flex gap-4 border-t border-ink/10 px-6 py-4"
                     >
-                      <dt className="w-24 shrink-0 text-base font-medium text-steel">
+                      <dt className="w-24 shrink-0 text-base font-bold text-navy">
                         {row.label}
                       </dt>
                       <dd className="text-base leading-relaxed text-ink/85">
