@@ -34,7 +34,7 @@ export function About({ profile }: { profile: CompanyProfile }) {
           </p>
 
           {/* 회사 소개 (인사말) — 2열: 인용구+로고 / CEO 메시지 */}
-          <div className="mt-16 grid gap-12 sm:grid-cols-2 sm:gap-10">
+          <div className="mt-16 grid gap-10 sm:grid-cols-[auto_1fr] sm:gap-14">
             <div className="flex flex-col items-start gap-10">
               <p className="text-2xl font-bold leading-snug tracking-tight text-ink sm:text-3xl">
                 『{greetingQuoteLines[0]}
