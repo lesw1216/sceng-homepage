@@ -11,7 +11,7 @@ export function TechSkills({ phases }: { phases: TechPhase[] }) {
           <SectionHeading
             eyebrow="Technical Skills"
             title="보유기술"
-            description="분석·설계부터 개발·제작, 설치·시운전·교육까지 하나의 흐름으로 책임지고 종합적인 서비스를 제공합니다."
+            description="자동화시스템을 분석 및 설계부터 개발 · 제작 · 설치 · 시운전 · 교육까지 종합적인 서비스를 제공합니다."
           />
 
           {/* 단계 번호·제목을 Box 내부에 통합. 상단 테두리는 회사의 대표 선. */}
@@ -57,7 +57,7 @@ export function TechSkills({ phases }: { phases: TechPhase[] }) {
                               key={item}
                               className="flex gap-2 text-base leading-relaxed text-ink/80"
                             >
-                              <span className="mt-2.5 h-1.5 w-1.5 shrink-0 bg-orange" />
+                              <span className="mt-2.5 h-1.5 w-1.5 shrink-0 bg-navy" />
                               {item}
                             </li>
                           ))}
