@@ -62,6 +62,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ko"
+      data-scroll-behavior="smooth"
       className={`${pretendard.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
