@@ -107,7 +107,12 @@ export interface BusinessArea {
   title: string;
   titleEn: string;
   accent: BrandAccent;
-  items: string[];
+  /** 사업 분야 */
+  businessFields: string[];
+  /** 생산 품목 */
+  productItems: string[];
+  /** 솔루션 */
+  solutions: string[];
 }
 
 /* ─── 실적현황 ─────────────────────────────────────────── */

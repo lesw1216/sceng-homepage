@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useRef, useState } from "react";
+import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { businessAreaImage } from "@/lib/images";
 import type { BusinessArea } from "@/lib/content/types";
 
 interface BusinessTabsProps {
@@ -12,13 +11,19 @@ interface BusinessTabsProps {
   initialKey?: string;
 }
 
-/** 사업영역: 상단 탭으로 분야를 선택, 좌측 사진 + 우측 내용 표시 */
+/** 사업영역: 상단 탭으로 분야를 선택, 보유기술과 동일한 3열 박스로 본문 표시 */
 export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [active, setActive] = useState(
     () => areas.find((a) => a.key === initialKey)?.key ?? areas[0]?.key,
   );
   const area = areas.find((a) => a.key === active) ?? areas[0];
+
+  const panels = [
+    { title: "사업 분야", items: area.businessFields },
+    { title: "생산 품목", items: area.productItems },
+    { title: "솔루션", items: area.solutions },
+  ];
 
   return (
     <section id="business" className="scroll-mt-16 sm:scroll-mt-20 bg-white">
@@ -50,26 +55,22 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
                     setActive(areas[nextIndex].key);
                     tabRefs.current[nextIndex]?.focus();
                   }}
-                  className="group relative pb-4"
+                  className={`group relative pb-4 text-base transition-colors ${
+                    on ? "font-semibold text-orange" : "font-medium text-steel hover:text-navy"
+                  }`}
                   role="tab"
                   aria-selected={on}
                   aria-controls="business-panel"
                   tabIndex={on ? 0 : -1}
                 >
-                  <span
-                    className={`text-base font-semibold transition-colors ${
-                      on ? "text-navy" : "text-steel group-hover:text-navy"
-                    }`}
-                  >
-                    {a.title}
-                  </span>
-                  {/* hover 시 왼쪽 → 오른쪽으로 늘어나고, 벗어나면 반대 방향으로 사라진다. */}
+                  {a.title}
+                  {/* 활성: 오렌지 밑줄 고정. hover: 네이비 밑줄이 좌→우로 늘어나고, 벗어나면 반대 방향으로 사라진다. */}
                   <span
                     aria-hidden="true"
-                    className={`absolute inset-x-0 -bottom-px h-0.5 bg-navy transition-transform duration-300 ${
+                    className={`absolute inset-x-0 -bottom-px h-0.5 transition-transform duration-300 ${
                       on
-                        ? "scale-x-100"
-                        : "origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100"
+                        ? "scale-x-100 bg-orange"
+                        : "origin-right scale-x-0 bg-navy group-hover:origin-left group-hover:scale-x-100"
                     }`}
                   />
                 </button>
@@ -77,54 +78,30 @@ export function BusinessTabs({ areas, initialKey }: BusinessTabsProps) {
             })}
           </div>
 
-          {/* 좌측 사진 / 우측 내용 */}
-          <div
-            id="business-panel"
-            role="tabpanel"
-            className="mt-12 grid items-start gap-10 lg:grid-cols-[1.08fr_0.92fr]"
-          >
-            <div className="relative aspect-[4/3] overflow-hidden bg-concrete lg:aspect-auto lg:min-h-[500px]">
-              <Image
-                src={businessAreaImage[area.key]}
-                alt={`${area.title} 현장`}
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-
-            {/* 2열 설명은 항상 1열 이미지 상단과 같은 높이에서 시작한다(탭 전환 시에도 고정). */}
-            <div className="flex flex-col lg:px-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange">
-                {area.titleEn}
-              </p>
-              <h3 className="mt-3 text-2xl font-bold tracking-tight text-navy">
-                {area.title}
-              </h3>
-              {/* 문장이 임의로 줄바꿈되지 않도록 한 줄 = 한 항목으로 나열한다. */}
-              <ul className="mt-10 grid gap-y-4">
-                {area.items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2.5 text-base leading-relaxed text-ink/85"
-                  >
-                    <svg
-                      className="mt-1.5 h-4 w-4 shrink-0 text-orange"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 1 1 1.4-1.4l3.8 3.8 6.8-6.8a1 1 0 0 1 1.4 0Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* 보유기술 본문과 동일한 3열 박스 디자인. 번호·우측 그림자 숫자는 제외한다. */}
+          <div id="business-panel" role="tabpanel" className="mt-12 grid gap-6 lg:grid-cols-3">
+            {panels.map((panel) => (
+              <div
+                key={panel.title}
+                className="flex h-full flex-col border-x border-b border-ink/15"
+              >
+                <BrandLine />
+                <div className="flex flex-1 flex-col p-8">
+                  <h3 className="text-xl font-semibold text-navy">{panel.title}</h3>
+                  <ul className="mt-6 space-y-1.5">
+                    {panel.items.map((item) => (
+                      <li
+                        key={item}
+                        className="flex gap-2 text-base leading-relaxed text-ink/80"
+                      >
+                        <span className="mt-2.5 h-1.5 w-1.5 shrink-0 bg-navy" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </Container>
