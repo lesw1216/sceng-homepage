@@ -10,7 +10,7 @@ import type {
  */
 export const companyInfo: CompanyInfoSource = {
   name: "에스씨엔지니어링(주)",
-  nameEn: "SC ENGINEERING Co., Ltd",
+  nameEn: "Systems and Controls Engineering",
   shortName: "SCE",
   ceo: "이구호",
   // TODO: 실제 사업자등록번호 확인 후 교체 (임시값)
@@ -24,7 +24,7 @@ export const companyInfo: CompanyInfoSource = {
     email: "ghlee@scengineering.co.kr",
     website: "www.scengineering.co.kr",
     address:
-      "경기도 부천시 원미구 조마루로385번길 92, 부천테크노밸리 유1센터 907호",
+      "14558 경기도 부천시 원미구 조마루로385번길 92 (부천테크노밸리 U1 센터 907호)",
     mapUrl:
       "https://map.naver.com/p/search/" +
       encodeURIComponent(
@@ -32,6 +32,17 @@ export const companyInfo: CompanyInfoSource = {
       ),
   },
 };
+
+/** 회사소개 섹션 제목 아래 부제 */
+export const aboutTagline = "신뢰와 기술력으로 고객과 함께 성장하겠습니다.";
+
+/** 회사 인사말 상단 인용구 */
+export const greetingQuoteLines: string[] = [
+  "미래를 제어하는 기술,",
+  "신뢰를 이어가는 기업",
+];
+export const greetingHighlight = "에스씨엔지니어링";
+export const greetingClosing = "입니다.";
 
 export const ceoMessage: string[] = [
   "안녕하십니까.",
@@ -41,7 +52,7 @@ export const ceoMessage: string[] = [
 ];
 
 /** 회사 소개 본문 말미 서명 문구 */
-export const ceoSignature = "에스씨엔지니어링 주식회사 임직원 일동";
+export const ceoSignature = "에스씨엔지니어링(주) 임직원일동 올림";
 
 export const coreValues: CoreValue[] = [
   {

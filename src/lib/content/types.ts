@@ -73,6 +73,14 @@ export interface LabeledList {
 /** 회사소개 섹션에서 함께 소비되는 회사 프로필 묶음 */
 export interface CompanyProfile {
   info: CompanyInfo;
+  /** 회사소개 섹션 제목 아래 부제 */
+  aboutTagline: string;
+  /** 인사말 상단 인용구 (줄바꿈 위치가 디자인 요구사항이라 줄 단위로 관리한다) */
+  greetingQuoteLines: string[];
+  /** 인용구 아래 마무리 문구 중 강조(오렌지) 부분 */
+  greetingHighlight: string;
+  /** 강조 뒤에 이어지는 마무리 문구 */
+  greetingClosing: string;
   /** CEO 인사말 문단 */
   ceoMessage: string[];
   /** 인사말 말미 서명 문구 */

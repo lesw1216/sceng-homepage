@@ -1,15 +1,27 @@
+import Image from "next/image";
 import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { CompanyProfile } from "@/lib/content/types";
 
 export function About({ profile }: { profile: CompanyProfile }) {
-  const { info, ceoMessage, ceoSignature, coreValues, productGroups } = profile;
+  const {
+    info,
+    aboutTagline,
+    greetingQuoteLines,
+    greetingHighlight,
+    greetingClosing,
+    ceoMessage,
+    ceoSignature,
+    coreValues,
+  } = profile;
 
   const overview = [
     { label: "회사명", value: `${info.name} | ${info.nameEn}` },
     { label: "대표이사", value: info.ceo },
-    { label: "주요사업", value: info.mainBusiness.join(" | ") },
+    { label: "주소", value: info.contact.address },
+    { label: "전화번호", value: info.contact.phone },
+    { label: "홈페이지", value: info.contact.website },
   ];
 
   return (
@@ -19,22 +31,40 @@ export function About({ profile }: { profile: CompanyProfile }) {
           <SectionHeading
             eyebrow="Company"
             title="회사소개"
-            description={info.headline}
+            description={aboutTagline}
           />
 
-          {/* 회사 소개 (인사말) — 단일 컬럼, 컨테이너 전체 너비 */}
-          <div className="mt-16">
-            <p className="text-2xl font-bold leading-tight tracking-tight text-navy sm:text-3xl">
-              미래를 제어하는 기술, 신뢰를 이어가는 기업
-            </p>
-            <div className="mt-8 space-y-5 text-base leading-relaxed text-ink/80">
-              {ceoMessage.map((paragraph) => (
-                <p key={paragraph.slice(0, 16)}>{paragraph}</p>
-              ))}
+          {/* 회사 소개 (인사말) — 2열: 인용구+로고 / CEO 메시지 */}
+          <div className="mt-16 grid gap-12 sm:grid-cols-2 sm:gap-16">
+            <div className="flex flex-col items-start gap-10">
+              <p className="text-2xl font-bold leading-snug tracking-tight text-ink sm:text-3xl">
+                『{greetingQuoteLines[0]}
+                <br />
+                {greetingQuoteLines[1]}』
+                <br />
+                <span className="text-orange">{greetingHighlight}</span>{" "}
+                {greetingClosing}
+              </p>
+              <Image
+                src="/sce-logo-ko-l.svg"
+                alt={`${info.name} 로고`}
+                width={500}
+                height={264}
+                unoptimized
+                className="h-32 w-auto"
+              />
             </div>
-            <p className="mt-10 text-right text-lg font-bold text-navy">
-              {ceoSignature}
-            </p>
+
+            <div>
+              <div className="space-y-5 text-base leading-relaxed text-ink/80">
+                {ceoMessage.map((paragraph) => (
+                  <p key={paragraph.slice(0, 16)}>{paragraph}</p>
+                ))}
+              </div>
+              <p className="mt-10 text-right text-lg font-bold text-navy">
+                {ceoSignature}
+              </p>
+            </div>
           </div>
 
           {/* 회사 개요 */}
@@ -89,35 +119,6 @@ export function About({ profile }: { profile: CompanyProfile }) {
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* 주요 생산품목 */}
-          <div className="mt-20">
-            <h3 className="text-2xl font-bold tracking-tight text-navy">주요 생산품목</h3>
-            <ul className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {productGroups.map((group) => (
-                <li
-                  key={group.label ?? group.items[0]}
-                  className="border border-ink/15 bg-white p-5"
-                >
-                  {group.label && (
-                    <p className="mb-2.5 text-sm font-semibold uppercase tracking-wider text-orange">
-                      {group.label}
-                    </p>
-                  )}
-                  <div className="flex flex-wrap gap-1.5">
-                    {group.items.map((item) => (
-                      <span
-                        key={item}
-                        className="border border-ink/10 px-2.5 py-1 text-sm text-ink/80"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </Container>

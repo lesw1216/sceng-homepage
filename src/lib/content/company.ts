@@ -1,8 +1,12 @@
 import {
+  aboutTagline,
   ceoMessage,
   ceoSignature,
   companyInfo,
   coreValues,
+  greetingClosing,
+  greetingHighlight,
+  greetingQuoteLines,
   productGroups,
 } from "@/content/company";
 import type { CompanyInfo, CompanyInfoSource, CompanyProfile } from "./types";
@@ -23,6 +27,10 @@ export async function getCompanyInfo(): Promise<CompanyInfo> {
 export async function getCompanyProfile(): Promise<CompanyProfile> {
   return {
     info: toCompanyInfo(companyInfo),
+    aboutTagline,
+    greetingQuoteLines,
+    greetingHighlight,
+    greetingClosing,
     ceoMessage,
     ceoSignature,
     coreValues,
