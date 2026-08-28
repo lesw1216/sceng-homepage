@@ -19,23 +19,22 @@ export function About({ profile }: { profile: CompanyProfile }) {
   const overview = [
     { label: "회사명", value: `${info.name} | ${info.nameEn}` },
     { label: "대표이사", value: info.ceo },
-    { label: "주소", value: info.contact.address },
     { label: "전화번호", value: info.contact.phone },
     { label: "홈페이지", value: info.contact.website },
+    { label: "주소", value: info.contact.address },
   ];
 
   return (
     <section id="about" className="scroll-mt-16 sm:scroll-mt-20 bg-white">
       <Container>
         <div className="border-t border-ink/10 py-24 sm:py-32">
-          <SectionHeading
-            eyebrow="Company"
-            title="회사소개"
-            description={aboutTagline}
-          />
+          <SectionHeading eyebrow="Company" title="회사소개" />
+          <p className="mt-5 max-w-4xl text-2xl font-bold leading-relaxed text-ink/80">
+            {aboutTagline}
+          </p>
 
           {/* 회사 소개 (인사말) — 2열: 인용구+로고 / CEO 메시지 */}
-          <div className="mt-16 grid gap-12 sm:grid-cols-2 sm:gap-16">
+          <div className="mt-16 grid gap-12 sm:grid-cols-2 sm:gap-10">
             <div className="flex flex-col items-start gap-10">
               <p className="text-2xl font-bold leading-snug tracking-tight text-ink sm:text-3xl">
                 『{greetingQuoteLines[0]}
