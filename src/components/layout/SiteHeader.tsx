@@ -80,7 +80,7 @@ export function SiteHeader() {
     >
       <Container>
         <div className="flex h-16 items-center justify-between sm:h-20">
-          {/* 로고 높이는 48px 고정(모바일 36px), 폭은 원본 비율(868:155)을 따른다. */}
+          {/* 로고 높이는 48px 고정(모바일 36px), 폭은 원본 비율(1312:155)을 따른다. */}
           <Link
             href="/"
             onClick={handleLogoClick}
@@ -90,7 +90,7 @@ export function SiteHeader() {
             <Image
               src="/sce-logo-ko.svg"
               alt="에스씨엔지니어링 로고"
-              width={868}
+              width={1312}
               height={155}
               priority
               unoptimized

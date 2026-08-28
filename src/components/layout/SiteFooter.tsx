@@ -21,7 +21,7 @@ export function SiteFooter({ company }: SiteFooterProps) {
             <Image
               src="/sce-logo-ko.svg"
               alt="에스씨엔지니어링 로고"
-              width={868}
+              width={1312}
               height={155}
               unoptimized
               className="h-10 w-auto max-w-full object-contain object-left"
