@@ -13,8 +13,7 @@ export const companyInfo: CompanyInfoSource = {
   nameEn: "Systems and Controls Engineering",
   shortName: "SCE",
   ceo: "이구호",
-  // TODO: 실제 사업자등록번호 확인 후 교체 (임시값)
-  businessNumber: "123-45-67890",
+  businessNumber: "669-81-04046",
   headlineLines: ["스마트 공간과 최첨단 인프라를 위한", "자동화 솔루션"],
   tagline: "미래를 제어하는 기술의 신뢰를 이어가는 기업",
   mainBusiness: ["산업 자동화", "빌딩 자동화", "데이터센터 자동화"],

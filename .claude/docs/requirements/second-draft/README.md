@@ -13,7 +13,8 @@
 ## 요구사항 문서
 
 0. [전역 요구사항](./00-global.md)
-1. [회사 소개](./03-about.md)
+1. [회사 소개](./01-about.md)
 2. [보유기술](./02-technology.md)
 3. [사업영역](./03-business.md)
 4. [실적현황](./04-projects.md)
+5. [실적 상세](./05-project-detail.md)
