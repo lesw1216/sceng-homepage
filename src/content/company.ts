@@ -21,7 +21,7 @@ export const companyInfo: CompanyInfoSource = {
     phone: "032-710-3396",
     mobile: "010-3907-0853",
     email: "ghlee@scengineering.co.kr",
-    website: "www.scengineering.co.kr",
+    website: "scengineering.co.kr",
     address:
       "14558 경기도 부천시 원미구 조마루로385번길 92 (부천테크노밸리 U1 센터 907호)",
     // 주소 검색은 건물만 노출돼(스마트플레이스 미반영), 등록된 장소로 바로
