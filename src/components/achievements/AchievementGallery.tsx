@@ -58,7 +58,7 @@ export function AchievementGallery({ images, title }: AchievementGalleryProps) {
               src={src}
               alt={`${title} 현장 사진 ${index + 1}`}
               fill
-              priority={index === 0}
+              loading={index === 0 ? "eager" : "lazy"}
               sizes="(min-width: 1024px) 60vw, 100vw"
               className="object-cover"
             />

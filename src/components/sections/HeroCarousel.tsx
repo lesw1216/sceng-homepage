@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { type MouseEvent, useEffect, useState } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { HERO_SECTION_ID } from "@/components/layout/navigation";
@@ -36,6 +36,13 @@ export function HeroCarousel({ company }: HeroCarouselProps) {
     return () => window.clearInterval(timer);
   }, [prefersReducedMotion]);
 
+  // 이미 같은 해시에 있으면 재클릭해도 브라우저가 다시 스크롤하지 않으므로 직접 이동시킨다.
+  const scrollToSection = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
+    event.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", `#${id}`);
+  };
+
   return (
     <section
       id={HERO_SECTION_ID}
@@ -56,7 +63,7 @@ export function HeroCarousel({ company }: HeroCarouselProps) {
             src={slide.src}
             alt={slide.alt}
             fill
-            priority={index === 0}
+            loading={index === 0 ? "eager" : "lazy"}
             sizes="100vw"
             className="object-cover"
           />
@@ -90,10 +97,18 @@ export function HeroCarousel({ company }: HeroCarouselProps) {
       <div className="absolute inset-x-0 bottom-7 z-20">
         <Container className="flex flex-wrap items-center justify-between gap-6">
           <div className="flex flex-wrap gap-3">
-            <ButtonLink href="#business" variant="primary">
+            <ButtonLink
+              href="#business"
+              variant="primary"
+              onClick={(event) => scrollToSection(event, "business")}
+            >
               사업영역 보기 <span aria-hidden="true">↘</span>
             </ButtonLink>
-            <ButtonLink href="#contact" variant="ghost">
+            <ButtonLink
+              href="#contact"
+              variant="ghost"
+              onClick={(event) => scrollToSection(event, "contact")}
+            >
               프로젝트 문의
             </ButtonLink>
           </div>

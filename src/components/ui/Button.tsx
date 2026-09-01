@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "ghost";
 
@@ -8,6 +8,7 @@ interface ButtonLinkProps {
   /** 외부 링크(새 탭 + rel) 여부 */
   external?: boolean;
   className?: string;
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
   children: ReactNode;
 }
 
@@ -24,6 +25,7 @@ export function ButtonLink({
   variant = "primary",
   external = false,
   className = "",
+  onClick,
   children,
 }: ButtonLinkProps) {
   const externalProps = external
@@ -32,6 +34,7 @@ export function ButtonLink({
   return (
     <a
       href={href}
+      onClick={onClick}
       {...externalProps}
       className={`inline-flex h-12 items-center justify-center gap-2 rounded-sm px-6 text-base font-semibold transition-colors ${variantClass[variant]} ${className}`}
     >

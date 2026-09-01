@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
 import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
 import type { CompanyInfo } from "@/lib/content/types";
 import { NAV_ITEMS } from "./navigation";
+import { SectionNavLink } from "./SectionNavLink";
 
 interface SiteFooterProps {
   company: CompanyInfo;
@@ -49,9 +49,13 @@ export function SiteFooter({ company }: SiteFooterProps) {
             <ul className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm font-medium text-navy">
               {NAV_ITEMS.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="hover:text-orange">
+                  <SectionNavLink
+                    href={item.href}
+                    sectionId={item.id}
+                    className="hover:text-orange"
+                  >
                     {item.label}
-                  </Link>
+                  </SectionNavLink>
                 </li>
               ))}
             </ul>

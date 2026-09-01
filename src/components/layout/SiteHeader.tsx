@@ -11,6 +11,7 @@ import {
   HERO_SECTION_ID,
   NAV_ITEMS,
 } from "./navigation";
+import { SectionNavLink } from "./SectionNavLink";
 
 /** 스크롤 스파이 대상. Hero(top)는 nav 항목이 아니지만 "활성 없음"을 판정하는 데 필요하다. */
 const SPY_IDS = [HERO_SECTION_ID, ...NAV_ITEMS.map((item) => item.id)];
@@ -92,7 +93,7 @@ export function SiteHeader() {
               alt="에스씨엔지니어링 로고"
               width={1312}
               height={155}
-              priority
+              loading="eager"
               unoptimized
               className="h-9 w-auto max-w-full object-contain object-left sm:h-12"
             />
@@ -104,9 +105,10 @@ export function SiteHeader() {
                 const on = activeId === item.id;
                 return (
                   <li key={item.id}>
-                    <Link
+                    <SectionNavLink
                       href={item.href}
-                      aria-current={on ? "true" : undefined}
+                      sectionId={item.id}
+                      ariaCurrent={on ? "true" : undefined}
                       className={`group relative block py-2 text-lg font-semibold transition-colors ${
                         on ? "text-orange" : "text-navy"
                       }`}
@@ -122,7 +124,7 @@ export function SiteHeader() {
                             : "origin-right scale-x-0 bg-navy group-hover:origin-left group-hover:scale-x-100"
                         }`}
                       />
-                    </Link>
+                    </SectionNavLink>
                   </li>
                 );
               })}
@@ -175,16 +177,17 @@ export function SiteHeader() {
                 const on = activeId === item.id;
                 return (
                   <li key={item.id}>
-                    <Link
+                    <SectionNavLink
                       href={item.href}
-                      onClick={() => setOpen(false)}
-                      aria-current={on ? "true" : undefined}
+                      sectionId={item.id}
+                      onNavigate={() => setOpen(false)}
+                      ariaCurrent={on ? "true" : undefined}
                       className={`block py-3 text-lg font-semibold ${
                         on ? "text-orange" : "text-navy"
                       }`}
                     >
                       {item.label}
-                    </Link>
+                    </SectionNavLink>
                   </li>
                 );
               })}
