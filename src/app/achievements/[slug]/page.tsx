@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AchievementGallery } from "@/components/achievements/AchievementGallery";
+import { BrandLine } from "@/components/ui/BrandLine";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import {
@@ -92,7 +93,9 @@ export default async function AchievementDetailPage({
             </div>
 
             <aside>
-              <div className="sticky top-28 border border-ink/15">
+              {/* 상단 테두리는 회사의 대표 선(BrandLine) */}
+              <div className="sticky top-28 border-x border-b border-ink/15">
+                <BrandLine />
                 <div className="p-6">
                   <h2 className="text-base font-semibold uppercase tracking-wider text-navy">
                     Project Info
