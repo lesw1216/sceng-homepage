@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { PreventDrag } from "@/components/layout/PreventDrag";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { getCompanyInfo } from "@/lib/content/company";
@@ -66,6 +67,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`${pretendard.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <PreventDrag />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter company={company} />

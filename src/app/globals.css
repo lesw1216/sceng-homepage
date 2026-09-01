@@ -77,6 +77,24 @@ select:focus-visible {
   border-color: var(--color-navy);
 }
 
+/* 전역 요구사항(00-global): 마우스로 텍스트를 드래그해 선택하거나 이미지를
+   끌어낼 수 없게 막는다. 폼 컨트롤은 브라우저 자체 선택·편집 동작을 유지한다. */
+html {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input,
+textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+img,
+a {
+  -webkit-user-drag: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
