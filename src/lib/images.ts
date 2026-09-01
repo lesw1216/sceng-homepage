@@ -1,13 +1,6 @@
-/** 사업영역 key → 대표 이미지 (public/images) */
-export const businessAreaImage: Record<string, string> = {
-  "industry-automation": "/images/business-industry.jpg",
-  "building-automation": "/images/business-building.jpg",
-  "datacenter-infra": "/images/business-datacenter.jpg",
-};
-
-/** 홈 Hero 캐러셀 슬라이드 (사업분야별 대표 사진) */
+/** 홈 Hero 캐러셀 슬라이드 (실적 현장 사진, public/images/hero) */
 export const heroSlides: { src: string; alt: string }[] = [
-  { src: "/images/business-industry.jpg", alt: "산업 자동화 로봇 생산 라인" },
-  { src: "/images/business-building.jpg", alt: "빌딩 자동화 스마트 빌딩 외벽" },
-  { src: "/images/business-datacenter.jpg", alt: "데이터센터 인프라 서버 설비" },
+  { src: "/images/hero/01-resort-control-system.webp", alt: "리조트 용수설비 감시제어시스템 화면" },
+  { src: "/images/hero/02-baegeon-hitech-factory.webp", alt: "배건하이텍 6공장 자동창고 스태커크레인 전기제어반" },
+  { src: "/images/hero/03-ulsan-tire-warehouse.webp", alt: "울산 타이어 자동창고 스태커크레인 설비" },
 ];
