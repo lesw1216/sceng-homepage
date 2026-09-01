@@ -25,11 +25,9 @@ export const companyInfo: CompanyInfoSource = {
     website: "www.scengineering.co.kr",
     address:
       "14558 경기도 부천시 원미구 조마루로385번길 92 (부천테크노밸리 U1 센터 907호)",
-    mapUrl:
-      "https://map.naver.com/p/search/" +
-      encodeURIComponent(
-        "부천테크노밸리 유1센터 조마루로385번길 92",
-      ),
+    // 주소 검색은 건물만 노출돼(스마트플레이스 미반영), 등록된 장소로 바로
+    // 연결되는 네이버 지도 단축 링크를 사용한다.
+    mapUrl: "https://naver.me/5o0J0eFI",
   },
 };
 
