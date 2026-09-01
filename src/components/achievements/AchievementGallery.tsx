@@ -124,6 +124,7 @@ export function AchievementGallery({ images, title }: AchievementGalleryProps) {
                     src={src}
                     alt=""
                     fill
+                    loading={index === 0 ? "eager" : "lazy"}
                     sizes="96px"
                     className={`object-cover transition-opacity ${
                       on ? "opacity-100" : "opacity-60"
