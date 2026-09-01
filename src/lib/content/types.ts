@@ -25,7 +25,6 @@ export interface ContentRecord {
 
 export interface CompanyContact {
   phone: string;
-  mobile: string;
   email: string;
   website: string;
   address: string;

@@ -19,7 +19,6 @@ export const companyInfo: CompanyInfoSource = {
   mainBusiness: ["산업 자동화", "빌딩 자동화", "데이터센터 자동화"],
   contact: {
     phone: "032-710-3396",
-    mobile: "010-3907-0853",
     email: "ghlee@scengineering.co.kr",
     website: "scengineering.co.kr",
     address:
