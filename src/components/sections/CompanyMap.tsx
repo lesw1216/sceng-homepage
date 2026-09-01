@@ -5,25 +5,18 @@ interface CompanyMapProps {
   mapUrl: string;
 }
 
-/**
- * 오시는 길 지도 영역.
- * 지도 API(Client ID) 발급 전이라 레이아웃 공간만 확보한다.
- * TODO: 지도 API 연동 시 이 컴포넌트 내부만 교체하면 되도록 독립 구성.
- */
+/** 오시는 길 지도 영역. 구글 지도 embed + 네이버 지도 외부 링크를 함께 제공한다. */
 export function CompanyMap({ address, mapUrl }: CompanyMapProps) {
   return (
     <div>
-      <div
-        className="flex min-h-[320px] items-center justify-center border border-dashed border-steel/50 bg-concrete/40 p-8 text-center"
-        role="img"
-        aria-label={`회사 위치 지도 영역 (${address})`}
-      >
-        <p className="text-base leading-relaxed text-ink/70">
-          지도 영역 (준비 중)
-          <br />
-          아래 버튼으로 네이버 지도에서 위치를 확인하실 수 있습니다.
-        </p>
-      </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m5!3m3!1m2!1s0x357b63b97f37be75%3A0xa01d8697dc2114ab!2z67aA7LKc7YWM7YGs64W467C466asIFUx7IS87YSw!5e0!3m2!1sko!2skr!4v1788135509924!5m2!1sko!2skr"
+        className="h-[320px] w-full border-0"
+        title={`${address} 위치 지도`}
+        loading="lazy"
+        allowFullScreen
+        referrerPolicy="strict-origin-when-cross-origin"
+      />
       <div className="mt-5">
         <ButtonLink href={mapUrl} variant="secondary" external>
           네이버 지도에서 보기
