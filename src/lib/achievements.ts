@@ -32,7 +32,7 @@ export function filterAchievements(
     if (query.year !== ALL_FILTER && item.year !== query.year) return false;
     if (keyword === "") return true;
 
-    return [item.title, item.client, item.orderer, item.location]
+    return [item.title, item.client, item.location]
       .join(" ")
       .toLowerCase()
       .includes(keyword);

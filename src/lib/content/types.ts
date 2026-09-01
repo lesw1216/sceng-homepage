@@ -132,8 +132,6 @@ export interface AchievementSource extends ContentRecord {
   images: string[];
   /** 고객 */
   client: string;
-  /** 발주처 */
-  orderer: string;
   /** 위치 */
   location: string;
   /** 프로젝트 시작일 (YYYY-MM) */

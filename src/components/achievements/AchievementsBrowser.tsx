@@ -244,7 +244,7 @@ export function AchievementsBrowser({
                     type="search"
                     value={keywordInput}
                     onChange={(event) => setKeywordInput(event.target.value)}
-                    placeholder="프로젝트 이름, 고객사, 발주처, 위치를 입력하세요."
+                    placeholder="프로젝트 이름, 고객사, 위치를 입력하세요."
                     aria-label="실적 검색"
                     className="h-full w-full bg-white px-4 text-base text-ink outline-none focus-visible:outline-none"
                   />
@@ -314,10 +314,6 @@ export function AchievementsBrowser({
                                 <div className="flex gap-2">
                                   <dt className="shrink-0 font-bold text-navy">고객</dt>
                                   <dd className="min-w-0 flex-1 truncate">{item.client}</dd>
-                                </div>
-                                <div className="flex gap-2">
-                                  <dt className="shrink-0 font-bold text-navy">발주처</dt>
-                                  <dd className="min-w-0 flex-1 truncate">{item.orderer}</dd>
                                 </div>
                                 <div className="flex gap-2">
                                   <dt className="shrink-0 font-bold text-navy">기간</dt>

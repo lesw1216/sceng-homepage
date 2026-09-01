@@ -46,7 +46,6 @@ export default async function AchievementDetailPage({
 
   const meta = [
     { label: "고객사", value: item.client },
-    { label: "발주", value: item.orderer },
     { label: "위치", value: item.location },
     { label: "프로젝트 기간", value: item.period },
     { label: "분류", value: item.category },
