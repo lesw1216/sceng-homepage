@@ -27,7 +27,8 @@ export async function generateMetadata({
     title: item.title,
     description: item.summary,
     alternates: { canonical: `/achievements/${slug}` },
-    robots: item.isDemo ? { index: false, follow: false } : undefined,
+    // 실적 상세는 색인에서 제외하되, 내부 링크는 계속 크롤링하도록 follow는 허용한다.
+    robots: { index: false, follow: true },
     openGraph: {
       title: item.title,
       description: item.summary,
