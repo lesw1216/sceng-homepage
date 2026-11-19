@@ -4,7 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type MouseEvent, useEffect, useState } from "react";
+import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { EDGE_DEMO_URL } from "@/lib/site";
 import {
   ACHIEVEMENTS_PATH_PREFIX,
   ACHIEVEMENTS_SECTION_ID,
@@ -99,8 +101,25 @@ export function SiteHeader() {
             />
           </Link>
 
-          <nav className="hidden lg:block" aria-label="주요 메뉴">
-            <ul className="flex items-center gap-8 lg:gap-10">
+          {/* 로고·데모 버튼·nav가 한 줄에 들어가는 xl부터 가로 배치하고, 그 미만은 햄버거 메뉴로 접는다. */}
+          <div className="hidden shrink-0 xl:block">
+            <ButtonLink
+              href={EDGE_DEMO_URL}
+              external
+              size="sm"
+              className="text-center"
+            >
+              <span>
+                Power Edge Cube용 Edge 시스템
+                <br />
+                데모 보러가기
+              </span>
+              <ExternalLinkIcon />
+            </ButtonLink>
+          </div>
+
+          <nav className="hidden xl:block" aria-label="주요 메뉴">
+            <ul className="flex items-center gap-10">
               {NAV_ITEMS.map((item) => {
                 const on = activeId === item.id;
                 return (
@@ -134,7 +153,7 @@ export function SiteHeader() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="text-navy lg:hidden"
+            className="text-navy xl:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label="메뉴 열기"
@@ -168,7 +187,7 @@ export function SiteHeader() {
       {open && (
         <nav
           id="mobile-menu"
-          className="border-t border-ink/10 bg-white lg:hidden"
+          className="border-t border-ink/10 bg-white xl:hidden"
           aria-label="모바일 메뉴"
         >
           <Container>
@@ -192,9 +211,44 @@ export function SiteHeader() {
                 );
               })}
             </ul>
+            <div className="pb-4 pt-2">
+              <ButtonLink
+                href={EDGE_DEMO_URL}
+                external
+                className="w-full text-center"
+              >
+                {/* 좁은 폭에서 "데모 / 보러가기"로 끊기지 않도록 마지막 구절은 붙여 둔다. */}
+                <span>
+                  Power Edge Cube용 Edge 시스템{" "}
+                  <span className="whitespace-nowrap">데모 보러가기</span>
+                </span>
+                <ExternalLinkIcon />
+              </ButtonLink>
+            </div>
           </Container>
         </nav>
       )}
     </header>
+  );
+}
+
+/** 새 탭으로 열리는 외부 링크임을 표시한다(색만으로 정보를 전달하지 않기 위해). */
+function ExternalLinkIcon() {
+  return (
+    <svg
+      className="h-4 w-4 shrink-0"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={2}
+      stroke="currentColor"
+      aria-label="새 창으로 열림"
+      role="img"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"
+      />
+    </svg>
   );
 }

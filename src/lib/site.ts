@@ -5,3 +5,6 @@ export const SITE_URL = "https://scengineering.co.kr";
 
 export const SITE_DESCRIPTION =
   "에스씨엔지니어링(주)는 산업 자동화, 빌딩 자동화, 데이터센터 인프라(EPMS/DCIM)를 아우르는 통합 제어 솔루션 전문기업입니다.";
+
+/** Power Edge Cube용 Edge 시스템 데모 (헤더 CTA) */
+export const EDGE_DEMO_URL = "https://demo.scengineering.co.kr";
