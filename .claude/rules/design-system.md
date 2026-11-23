@@ -36,7 +36,8 @@
 - **모든 섹션 배경은 흰색으로 통일**. 색은 텍스트·테두리·소형 액센트에만.
 - 헤더/푸터는 화이트, `RootLayout` 공통. 헤더 높이는 `h-16 sm:h-20`, 로고 높이는 `h-9 sm:h-12`.
   헤더 nav는 `text-lg`(18px)로 본문 링크보다 한 단계 크게 둔다.
-- 앵커 섹션의 `scroll-mt`는 헤더 높이와 정확히 일치시킨다: `scroll-mt-16 sm:scroll-mt-20`.
+- xl 미만에서는 로고 줄 아래에 데모 버튼 줄(`h-14`)이 항상 노출되어 헤더가 `120px`(sm `136px`)이 된다. xl부터는 한 줄(`80px`).
+- 앵커 섹션의 `scroll-mt`는 헤더 높이와 정확히 일치시킨다: `scroll-mt-30 sm:scroll-mt-34 xl:scroll-mt-20`.
   헤더 높이를 바꾸면 이 값도 함께 바꾼다.
 - 로고는 `public/sce-logo-ko.svg`(헤더·푸터 공용), 파비콘은 `public/sce-symbol.svg`(+ 레거시 폴백 `src/app/favicon.ico`).
 - 섹션 제목은 `SectionHeading`(오렌지 영문 라벨 + 바 + h2, 구분선 없음). 상세 페이지는 `PageHero`.

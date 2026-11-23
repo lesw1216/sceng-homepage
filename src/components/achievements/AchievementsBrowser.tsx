@@ -180,7 +180,7 @@ export function AchievementsBrowser({
     }`;
 
   return (
-    <section id="achievements" className="scroll-mt-16 sm:scroll-mt-20 bg-white">
+    <section id="achievements" className="scroll-mt-30 sm:scroll-mt-34 xl:scroll-mt-20 bg-white">
       <Container>
         <div className="border-t border-ink/10 py-24 sm:py-32">
           <SectionHeading

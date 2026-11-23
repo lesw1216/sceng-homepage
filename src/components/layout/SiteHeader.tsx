@@ -182,6 +182,24 @@ export function SiteHeader() {
             </svg>
           </button>
         </div>
+
+        {/* xl 미만에서는 데모 버튼을 메뉴에 숨기지 않고 로고 아래 줄에 항상 노출한다.
+            줄 높이를 h-14로 고정해 헤더 전체 높이(= 섹션 scroll-mt)가 흔들리지 않게 한다. */}
+        <div className="flex h-14 items-center xl:hidden">
+          <ButtonLink
+            href={EDGE_DEMO_URL}
+            external
+            size="sm"
+            className="w-full text-center"
+          >
+            {/* 좁은 폭에서 "데모 / 보러가기"로 끊기지 않도록 마지막 구절은 붙여 둔다. */}
+            <span>
+              Power Edge Cube용 Edge 시스템{" "}
+              <span className="whitespace-nowrap">데모 보러가기</span>
+            </span>
+            <ExternalLinkIcon />
+          </ButtonLink>
+        </div>
       </Container>
 
       {open && (
@@ -211,20 +229,6 @@ export function SiteHeader() {
                 );
               })}
             </ul>
-            <div className="pb-4 pt-2">
-              <ButtonLink
-                href={EDGE_DEMO_URL}
-                external
-                className="w-full text-center"
-              >
-                {/* 좁은 폭에서 "데모 / 보러가기"로 끊기지 않도록 마지막 구절은 붙여 둔다. */}
-                <span>
-                  Power Edge Cube용 Edge 시스템{" "}
-                  <span className="whitespace-nowrap">데모 보러가기</span>
-                </span>
-                <ExternalLinkIcon />
-              </ButtonLink>
-            </div>
           </Container>
         </nav>
       )}

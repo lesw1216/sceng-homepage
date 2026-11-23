@@ -47,7 +47,7 @@ export function HeroCarousel({ company }: HeroCarouselProps) {
     <section
       id={HERO_SECTION_ID}
       /* 헤더와 2px 간격 */
-      className="relative mt-0.5 min-h-[680px] scroll-mt-16 sm:scroll-mt-20 overflow-hidden bg-white sm:min-h-[760px]"
+      className="relative mt-0.5 min-h-[680px] scroll-mt-30 sm:scroll-mt-34 xl:scroll-mt-20 overflow-hidden bg-white sm:min-h-[760px]"
       aria-roledescription="carousel"
       aria-label="에스씨엔지니어링 주요 사업"
     >
